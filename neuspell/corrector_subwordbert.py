@@ -213,11 +213,12 @@ class BertChecker(Corrector):
                     batch_acc = ncorr / ntotal
                     train_acc += batch_acc
                     # update progress
-                progressBar(batch_id + 1,
-                            int(np.ceil(len(train_data) / TRAIN_BATCH_SIZE)),
-                            ["batch_time", "batch_loss", "avg_batch_loss", "batch_acc", "avg_batch_acc"],
-                            [time.time() - st_time, batch_loss, train_loss / (batch_id + 1), batch_acc,
-                             train_acc / train_acc_count])
+                if train_acc_count >0:
+                    progressBar(batch_id + 1,
+                                int(np.ceil(len(train_data) / TRAIN_BATCH_SIZE)),
+                                ["batch_time", "batch_loss", "avg_batch_loss", "batch_acc", "avg_batch_acc"],
+                                [time.time() - st_time, batch_loss, train_loss / (batch_id + 1), batch_acc,
+                                train_acc / train_acc_count])
                 if batch_id == 0 or (batch_id + 1) % 5000 == 0:
                     nb = int(np.ceil(len(train_data) / TRAIN_BATCH_SIZE))
                     progress_write_file.write(f"{batch_id + 1}/{nb}\n")

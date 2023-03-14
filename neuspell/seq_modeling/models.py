@@ -911,6 +911,7 @@ class SubwordBert(nn.Module):
             out = torch.sum(batched_encodings, dim=1)
         else:
             raise Exception("Not Implemented")
+        print("out", out)
         return out
 
     def forward(self,

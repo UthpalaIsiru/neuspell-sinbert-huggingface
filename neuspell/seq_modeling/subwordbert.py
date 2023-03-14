@@ -78,13 +78,8 @@ def model_predictions(model, data, vocab, device, batch_size=16):
     model.to(device)
     for batch_id, (batch_labels, batch_sentences) in enumerate(data_iter):
         # set batch data for bert
-        print("=========before calling bert_tokenize_for_valid_examples==================== ")
-        print("batch_labels",batch_labels)
-        print("batch_sentences",batch_sentences)
         batch_labels_, batch_sentences_, batch_bert_inp, batch_bert_splits = bert_tokenize_for_valid_examples(
             batch_labels, batch_sentences)
-        print("==========after calling bert_tokenize_for_valid_examples=====================")
-        print("batch_labels_")
         print("len batch_labels_", len(batch_labels_))
         if len(batch_labels_) == 0:
             print("################")
@@ -112,7 +107,6 @@ def model_predictions(model, data, vocab, device, batch_size=16):
 
 
 def model_inference(model, data, topk, device, batch_size=16, vocab_=None):
-    print("=================calling model_inference")
     """
     model: an instance of SubwordBert
     data: list of tuples, with each tuple consisting of correct and incorrect 
@@ -121,7 +115,6 @@ def model_inference(model, data, topk, device, batch_size=16, vocab_=None):
     """
     if vocab_ is not None:
         vocab = vocab_
-    print("###############################################")
     inference_st_time = time.time()
     _corr2corr, _corr2incorr, _incorr2corr, _incorr2incorr = 0, 0, 0, 0
     _mistakes = []
@@ -134,15 +127,11 @@ def model_inference(model, data, topk, device, batch_size=16, vocab_=None):
     model.eval()
     model.to(device)
     for batch_id, (batch_labels, batch_sentences) in tqdm(enumerate(data_iter)):
-        print("batch_id",batch_id)
-        print("batch_labels",batch_labels)
-        print("batch_sentences",batch_sentences)
         torch.cuda.empty_cache()
         st_time = time.time()
         # set batch data for bert
         batch_labels_, batch_sentences_, batch_bert_inp, batch_bert_splits = bert_tokenize_for_valid_examples(
             batch_labels, batch_sentences)
-        print("len(batch_labels_)====================hiiiiiiiiiiiiiiiiiii",len(batch_labels_))
         if len(batch_labels_) == 0:
             print("################")
             print("Not predicting the following lines due to pre-processing mismatch: \n")
@@ -164,8 +153,6 @@ def model_inference(model, data, topk, device, batch_size=16, vocab_=None):
                 """
                 batch_loss, batch_predictions = model(batch_bert_inp, batch_bert_splits, targets=batch_labels_ids,
                                                       topk=topk)
-                print("batch_loss",batch_loss)
-                print("batch_predictions",batch_predictions)
         except RuntimeError:
             print(f"batch_bert_inp:{len(batch_bert_inp.keys())},batch_labels_ids:{batch_labels_ids.shape}")
             raise Exception("")

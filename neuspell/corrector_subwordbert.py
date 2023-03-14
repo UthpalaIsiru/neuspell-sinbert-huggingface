@@ -47,7 +47,6 @@ class BertChecker(Corrector):
         for x, y, z in zip([data_dir], [clean_file], [corrupt_file]):
             print(x, y, z)
             test_data = load_data(x, y, z)
-            print("test_data",test_data)
             _ = model_inference(self.model,
                                 test_data,
                                 topk=1,
@@ -75,7 +74,7 @@ class BertChecker(Corrector):
                  corrupt_file,
                  data_dir="",
                  validation_split=0.2,
-                 n_epochs=2,
+                 n_epochs=1,
                  new_vocab_list: List = None):
         if new_vocab_list:
             raise NotImplementedError("Do not currently support modifying output vocabulary of the models "

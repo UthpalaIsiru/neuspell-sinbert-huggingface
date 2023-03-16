@@ -716,6 +716,9 @@ def bert_tokenize(batch_sentences):
 
 
 def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_sentences, bert_pretrained_name_or_path=None):
+    print("Log for debugging")
+    print("111111111 batch_orginal_sentences",batch_orginal_sentences)
+    print("222222222 batch_noisy_sentences",batch_noisy_sentences)
     """
     inputs:
         batch_noisy_sentences: List[str]
@@ -748,23 +751,27 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     # print("batch_orginal_sentences", batch_orginal_sentences)
     # print("batch_noisy_sentences", batch_noisy_sentences)
     _batch_orginal_sentences = _simple_bert_tokenize_sentences(batch_orginal_sentences)
-    # print("================after tokenizing======================")
-    # print("_batch_orginal_sentences", _batch_orginal_sentences)
+    print("================after tokenizing======================")
+    print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
 
     _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
-    # print("================after tokenizing======================")
-    # print("_batch_noisy_sentences", _batch_noisy_sentences)
+    print("================after tokenizing======================")
+    print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
 
     valid_idxs = [idx for idx, (a, b) in enumerate(zip(_batch_orginal_sentences, _batch_noisy_sentences)) if
                   len(a.split()) == len(b.split())]
-    # print("valid_idxs",valid_idxs)
+    print("55555555555555555 valid_idxs",valid_idxs)
     batch_orginal_sentences = [line for idx, line in enumerate(_batch_orginal_sentences) if idx in valid_idxs]
     batch_noisy_sentences = [line for idx, line in enumerate(_batch_noisy_sentences) if idx in valid_idxs]
     
-    batch_tokens = [line for idx, line in enumerate(_batch_tokens) if idx in valid_idxs]
-    # print("batch_tokens",batch_tokens)
-    batch_splits = [line for idx, line in enumerate(_batch_splits) if idx in valid_idxs]
+    print("after enumerating ")
+    print("6666666666666666 batch_orginal_sentences",batch_orginal_sentences)
+    print("7777777777777777 batch_noisy_sentences",batch_noisy_sentences)
 
+    batch_tokens = [line for idx, line in enumerate(_batch_tokens) if idx in valid_idxs]
+    print("8888888888888888 batch_tokens",batch_tokens)
+    batch_splits = [line for idx, line in enumerate(_batch_splits) if idx in valid_idxs]
+    print("99999999999999999 batch_splits", batch_splits)
     batch_bert_dict = {
         "attention_mask": [],
         "input_ids": [],

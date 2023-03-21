@@ -616,7 +616,10 @@ def merge_subtokens(tokens: List):
             merged_tokens[-1] = merged_tokens[-1] + token[2:]
         else:
             merged_tokens.append(token)
+    print("==================merge_subtokens================")
+    print("merged_tokens",merged_tokens)
     text = " ".join(merged_tokens)
+    print("text",text)
     return text
     
 # def _tokenize_untokenize(input_text: str):
@@ -630,6 +633,8 @@ def merge_subtokens(tokens: List):
 #     return " ".join(output)
 
 def _custom_bert_tokenize_sentence(input_text):
+    print("====_custom_bert_tokenize_sentence==============")
+    print("input_text",input_text)
     # tokens = []
     # split_sizes = []
     # text = []
@@ -645,13 +650,19 @@ def _custom_bert_tokenize_sentence(input_text):
 
     # return " ".join(text), tokens, split_sizes
     tokens = BERT_TOKENIZER.tokenize(input_text)
+    print('tokens',tokens)
     tokens = tokens[:BERT_MAX_SEQ_LEN - 2]  # 2 allowed for [CLS] and [SEP]
+    print('tokens',tokens)
+
     idxs = np.array([idx for idx, token in enumerate(tokens) if not token.startswith("##")] + [len(tokens)])
+    print('idxs',idxs)
     split_sizes = (idxs[1:] - idxs[0:-1]).tolist()
+    print('split_sizes',split_sizes)
     # NOTE: BERT tokenizer does more than just splitting at whitespace and tokenizing. So be careful.
     # -----> assert len(split_sizes)==len(text.split()), print(len(tokens), len(split_sizes), len(text.split()), split_sizes, text)
     # -----> hence do the following:
     text = merge_subtokens(tokens)
+    print('text',text)
     assert len(split_sizes) == len(text.split()), print(len(tokens), len(split_sizes), len(text.split()), split_sizes,
                                                         text)
     return text, tokens, split_sizes

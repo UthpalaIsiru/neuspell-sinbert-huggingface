@@ -765,7 +765,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     print("================after tokenizing======================")
     print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
 
-    _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_orginal_sentences)
+    _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
     # _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
     print("================after tokenizing======================")
     print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)

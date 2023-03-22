@@ -649,10 +649,14 @@ def _custom_bert_tokenize_sentence(input_text):
     #     text.append(token)
 
     # return " ".join(text), tokens, split_sizes
-    tokens = BERT_TOKENIZER.tokenize(input_text)
-    print('tokens',tokens)
-    tokens = tokens[:BERT_MAX_SEQ_LEN - 2]  # 2 allowed for [CLS] and [SEP]
-    print('tokens',tokens)
+
+    #commented original tokenizer to debug tokenizer issue
+    # tokens = BERT_TOKENIZER.tokenize(input_text)
+
+    tokens = BERT_TOKENIZER.tokenize(input_text)[:BERT_MAX_SEQ_LEN - 2]
+    print('tokens ***********************************',tokens)
+    # tokens = tokens[:BERT_MAX_SEQ_LEN - 2]  # 2 allowed for [CLS] and [SEP]
+    # print('tokens',tokens)
 
     idxs = np.array([idx for idx, token in enumerate(tokens) if not token.startswith("##")] + [len(tokens)])
     print('idxs',idxs)
@@ -766,7 +770,6 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
 
     _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
-    # _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
     print("================after tokenizing======================")
     print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
 

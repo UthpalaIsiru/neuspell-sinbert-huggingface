@@ -619,7 +619,7 @@ def merge_subtokens(tokens: List):
     # print("==================merge_subtokens================")
     # print("merged_tokens",merged_tokens)
     text = " ".join(merged_tokens)
-    print("text",text)
+    # print("text",text)
     return text
     
 # def _tokenize_untokenize(input_text: str):
@@ -668,7 +668,7 @@ def _custom_bert_tokenize_sentence(input_text):
     # -----> assert len(split_sizes)==len(text.split()), print(len(tokens), len(split_sizes), len(text.split()), split_sizes, text)
     # -----> hence do the following:
     text = merge_subtokens(tokens)
-    # print('text',text)
+    print('text',text)
     assert len(split_sizes) == len(text.split()), print(len(tokens), len(split_sizes), len(text.split()), split_sizes,
                                                         text)
     return text, tokens, split_sizes
@@ -733,9 +733,9 @@ def bert_tokenize(batch_sentences):
 
 
 def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_sentences, bert_pretrained_name_or_path=None):
-    # print("Log for debugging")
-    # print("111111111 batch_orginal_sentences",batch_orginal_sentences)
-    # print("222222222 batch_noisy_sentences",batch_noisy_sentences)
+    print("Log for debugging")
+    print("111111111 batch_orginal_sentences",batch_orginal_sentences)
+    print("222222222 batch_noisy_sentences",batch_noisy_sentences)
     """
     inputs:
         batch_noisy_sentences: List[str]
@@ -754,26 +754,27 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     if BERT_TOKENIZER is None:  # gets initialized during the first call to this method
         if bert_pretrained_name_or_path:
             # BERT_TOKENIZER = transformers.BertTokenizer.from_pretrained("bert-base-cased")
-            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
-            # BERT_TOKENIZER = transformers.BertTokenizer.from_pretrained("/content/neuspell-sinbert-huggingface/data/checkpoints/Fine_tuned_SinBERT_large")
+            BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
+            # BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
             BERT_TOKENIZER.do_basic_tokenize = True
             BERT_TOKENIZER.tokenize_chinese_chars = False
         else:
-            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
+            BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
+            # BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
             BERT_TOKENIZER.do_basic_tokenize = True
             BERT_TOKENIZER.tokenize_chinese_chars = False
 
 
-    # print("================before tokenizing======================")
-    # print("batch_orginal_sentences", batch_orginal_sentences)
-    # print("batch_noisy_sentences", batch_noisy_sentences)
+    print("================before tokenizing======================")
+    print("batch_orginal_sentences", batch_orginal_sentences)
+    print("batch_noisy_sentences", batch_noisy_sentences)
     _batch_orginal_sentences = _simple_bert_tokenize_sentences(batch_orginal_sentences)
-    # print("================after tokenizing======================")
-    # print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
+    print("================after tokenizing======================")
+    print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
 
     _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
-    # print("================after tokenizing======================")
-    # print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
+    print("================after tokenizing======================")
+    print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
 
     valid_idxs = [idx for idx, (a, b) in enumerate(zip(_batch_orginal_sentences, _batch_noisy_sentences)) if
                   len(a.split()) == len(b.split())]

@@ -74,7 +74,7 @@ class BertChecker(Corrector):
                  corrupt_file,
                  data_dir="",
                  validation_split=0.2,
-                 n_epochs=1,
+                 n_epochs=2,
                  new_vocab_list: List = None):
         if new_vocab_list:
             raise NotImplementedError("Do not currently support modifying output vocabulary of the models "
@@ -94,8 +94,8 @@ class BertChecker(Corrector):
         # training and validation
         #############################################
         model, vocab = self.model, self.vocab
-        TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 8, 16
-        # TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 16, 32
+        # TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 8, 16
+        TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 16, 32
         GRADIENT_ACC = 4
         DEVICE = self.device
         START_EPOCH, N_EPOCHS = 0, n_epochs

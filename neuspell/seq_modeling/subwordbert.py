@@ -102,6 +102,7 @@ def model_predictions(model, data, vocab, device, batch_size=16):
             _, batch_predictions = model(batch_bert_inp, batch_bert_splits, targets=batch_labels_ids, topk=topk)
         batch_predictions = untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_labels)
         final_sentences.extend(batch_predictions)
+        print("final_sentences",final_sentences)
     # print("total inference time for this data is: {:4f} secs".format(time.time()-inference_st_time))
     return final_sentences
 

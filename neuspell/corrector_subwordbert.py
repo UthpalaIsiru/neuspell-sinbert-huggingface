@@ -36,6 +36,7 @@ class BertChecker(Corrector):
         data = [(line, line) for line in mystrings]
         batch_size = 4 if self.device == "cpu" else 16
         return_strings = model_predictions(self.model, data, self.vocab, device=self.device, batch_size=batch_size)
+        print("return_strings",return_strings)
         if return_all:
             return mystrings, return_strings
         else:

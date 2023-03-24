@@ -415,6 +415,9 @@ def untokenize(batch_predictions, batch_lengths, vocab):
 
 
 def untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_clean_sentences, backoff="pass-through"):
+    print("================ debugging untokenize_without_unks ===============")
+    print("batch_predictions",batch_predictions)
+    print("batch_clean_sentences",batch_clean_sentences)
     assert backoff in ["neutral", "pass-through"], print(f"selected backoff strategy not implemented: {backoff}")
     idx2token = vocab["idx2token"]
     unktoken = vocab["token2idx"][vocab["unk_token"]]
@@ -424,6 +427,7 @@ def untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_clean
         batch_predictions = \
             [" ".join([idx2token[idx] if idx != unktoken else clean_[i] for i, idx in enumerate(pred_[:len_])]) \
              for pred_, len_, clean_ in zip(batch_predictions, batch_lengths, batch_clean_sentences)]
+        print("batch_predictions",batch_predictions)
     elif backoff == "neutral":
         batch_predictions = \
             [" ".join([idx2token[idx] if idx != unktoken else "a" for i, idx in enumerate(pred_[:len_])]) \
@@ -733,9 +737,9 @@ def bert_tokenize(batch_sentences):
 
 
 def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_sentences, bert_pretrained_name_or_path=None):
-    print("Log for debugging")
-    print("111111111 batch_orginal_sentences",batch_orginal_sentences)
-    print("222222222 batch_noisy_sentences",batch_noisy_sentences)
+    # print("Log for debugging")
+    # print("111111111 batch_orginal_sentences",batch_orginal_sentences)
+    # print("222222222 batch_noisy_sentences",batch_noisy_sentences)
     """
     inputs:
         batch_noisy_sentences: List[str]
@@ -765,16 +769,16 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
             BERT_TOKENIZER.tokenize_chinese_chars = False
 
 
-    print("================before tokenizing======================")
-    print("batch_orginal_sentences", batch_orginal_sentences)
-    print("batch_noisy_sentences", batch_noisy_sentences)
+    # print("================before tokenizing======================")
+    # print("batch_orginal_sentences", batch_orginal_sentences)
+    # print("batch_noisy_sentences", batch_noisy_sentences)
     _batch_orginal_sentences = _simple_bert_tokenize_sentences(batch_orginal_sentences)
-    print("================after tokenizing======================")
-    print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
+    # print("================after tokenizing======================")
+    # print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
 
     _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
-    print("================after tokenizing======================")
-    print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
+    # print("================after tokenizing======================")
+    # print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
 
     valid_idxs = [idx for idx, (a, b) in enumerate(zip(_batch_orginal_sentences, _batch_noisy_sentences)) if
                   len(a.split()) == len(b.split())]

@@ -418,11 +418,15 @@ def untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_clean
     print("================ debugging untokenize_without_unks ===============")
     print("batch_predictions",batch_predictions)
     print("batch_clean_sentences",batch_clean_sentences)
+    print("vocab", vocab)
     assert backoff in ["neutral", "pass-through"], print(f"selected backoff strategy not implemented: {backoff}")
     idx2token = vocab["idx2token"]
+    print("idx2token", idx2token)
     unktoken = vocab["token2idx"][vocab["unk_token"]]
+    print("unktoken", unktoken)
     assert len(batch_predictions) == len(batch_lengths) == len(batch_clean_sentences)
     batch_clean_sentences = [sent.split() for sent in batch_clean_sentences]
+    print("batch_clean_sentences", batch_clean_sentences)
     if backoff == "pass-through":
         batch_predictions = \
             [" ".join([idx2token[idx] if idx != unktoken else clean_[i] for i, idx in enumerate(pred_[:len_])]) \

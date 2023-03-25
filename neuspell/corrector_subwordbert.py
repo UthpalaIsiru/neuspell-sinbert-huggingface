@@ -32,7 +32,7 @@ class BertChecker(Corrector):
         # print("=============debugging correct_strings")
         self.is_model_ready()
         mystrings = bert_tokenize_for_valid_examples(mystrings, mystrings, self.bert_pretrained_name_or_path)[0]
-        # print("mystrings",mystrings)
+        print("mystrings",mystrings)
         data = [(line, line) for line in mystrings]
         batch_size = 4 if self.device == "cpu" else 16
         return_strings = model_predictions(self.model, data, self.vocab, device=self.device, batch_size=batch_size)

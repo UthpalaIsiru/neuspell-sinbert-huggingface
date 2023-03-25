@@ -873,8 +873,8 @@ class SubwordBert(nn.Module):
 
         self.bert_dropout = torch.nn.Dropout(0.2)
         # self.bert_model = get_pretrained_bert(bert_pretrained_name_or_path)
-        # self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
-        self.bert_model = AutoModelForMaskedLM.from_pretrained("xlm-roberta-base")
+        self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
+        # self.bert_model = AutoModelForMaskedLM.from_pretrained("xlm-roberta-base")
 
         print("self.bert_model",self.bert_model)
 

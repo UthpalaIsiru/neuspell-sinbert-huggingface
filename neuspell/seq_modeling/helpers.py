@@ -269,11 +269,18 @@ def batch_iter(data, batch_size, shuffle):
 
 
 def labelize(batch_labels, vocab):
+    print("===========debugging labelize====================")
     token2idx, pad_token, unk_token = vocab["token2idx"], vocab["pad_token"], vocab["unk_token"]
+    print("token2idx",token2idx)
+    print("pad_token",pad_token)
+    print("unk_token",unk_token)
     list_list = [[token2idx[token] if token in token2idx else token2idx[unk_token] for token in line.split()] for line
                  in batch_labels]
+    print("list_list",list_list)
     list_tensors = [torch.tensor(x) for x in list_list]
+    print("list_tensors",list_tensors)
     tensor_ = pad_sequence(list_tensors, batch_first=True, padding_value=token2idx[pad_token])
+    print("tensor_",tensor_)
     return tensor_, torch.tensor([len(x) for x in list_list]).long()
 
 
@@ -804,8 +811,8 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # "token_type_ids": []
     }
     if len(valid_idxs) > 0:
-        # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
-        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens) for tokens in batch_tokens[0]]
+        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
+        # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens) for tokens in batch_tokens[0]]
 
         batch_attention_masks = pad_sequence(
             [torch.tensor(encoded_dict["attention_mask"]) for encoded_dict in batch_encoded_dicts], batch_first=True,

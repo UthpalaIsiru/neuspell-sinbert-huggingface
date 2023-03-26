@@ -96,11 +96,16 @@ def model_predictions(model, data, vocab, device, batch_size=16):
         batch_labels_ids = batch_labels_ids.to(device)
         # forward
         with torch.no_grad():
+            print("batch_bert_inp",batch_bert_inp)
+            print("batch_bert_splits",batch_bert_splits)
+            print("batch_labels_ids",batch_labels_ids)
+            print("topk",topk)
             """
             NEW: batch_predictions can now be of shape (batch_size,batch_max_seq_len,topk) if topk>1, else (batch_size,batch_max_seq_len)
             """
             _, batch_predictions = model(batch_bert_inp, batch_bert_splits, targets=batch_labels_ids, topk=topk)
         batch_predictions = untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_labels)
+        print("batch_predictions",batch_predictions)
         final_sentences.extend(batch_predictions)
         print("final_sentences",final_sentences)
     # print("total inference time for this data is: {:4f} secs".format(time.time()-inference_st_time))

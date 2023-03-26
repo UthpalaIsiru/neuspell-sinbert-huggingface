@@ -921,7 +921,7 @@ class SubwordBert(nn.Module):
                 batch_splits: "list[list[int]]",
                 aux_word_embs: "tensor" = None,
                 targets: "tensor" = None,
-                topk=100000): #changed from 1 to 100000
+                topk=1): 
         # cnn
         batch_size = len(batch_splits)
         # bert

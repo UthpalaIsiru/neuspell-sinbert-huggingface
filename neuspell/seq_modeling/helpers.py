@@ -779,7 +779,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
             BERT_TOKENIZER.do_basic_tokenize = True
             BERT_TOKENIZER.tokenize_chinese_chars = False
 
-
+    print("model max length", BERT_TOKENIZER.model_max_length)
     # print("================before tokenizing======================")
     # print("batch_orginal_sentences", batch_orginal_sentences)
     # print("batch_noisy_sentences", batch_noisy_sentences)

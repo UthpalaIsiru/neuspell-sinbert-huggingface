@@ -780,7 +780,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
             BERT_TOKENIZER.tokenize_chinese_chars = False
 
     # print("model max length BEFORE", BERT_TOKENIZER.model_max_length)
-    # BERT_TOKENIZER.model_max_length = 514
+    BERT_TOKENIZER.model_max_length = 514
     # print("model max length AFTER", BERT_TOKENIZER.model_max_length)
     # print("================before tokenizing======================")
     # print("batch_orginal_sentences", batch_orginal_sentences)
@@ -816,7 +816,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         max_seq_len = max([len(tokens) for tokens in batch_tokens])
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,add_special_tokens =True, max_length = 514,truncation=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
-        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens), truncation=True, padding=True) for tokens in batch_tokens]
+        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens, max_length=514), truncation=True, padding=True) for tokens in batch_tokens]
 
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
 

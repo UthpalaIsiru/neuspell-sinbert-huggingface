@@ -270,6 +270,7 @@ def batch_iter(data, batch_size, shuffle):
 
 def labelize(batch_labels, vocab):
     print("===========debugging labelize====================")
+    print("batch_labels",batch_labels)
     token2idx, pad_token, unk_token = vocab["token2idx"], vocab["pad_token"], vocab["unk_token"]
     print("token2idx",token2idx)
     print("pad_token",pad_token)
@@ -281,7 +282,8 @@ def labelize(batch_labels, vocab):
     print("list_tensors",list_tensors)
     tensor_ = pad_sequence(list_tensors, batch_first=True, padding_value=token2idx[pad_token])
     print("tensor_",tensor_)
-    return tensor_, torch.tensor([len(x) for x in list_list]).long()
+    
+    return tensor_, ([len(x) for x in list_list]).clone().detach().requires_grad_(True)
 
 
 def tokenize(batch_sentences, vocab):

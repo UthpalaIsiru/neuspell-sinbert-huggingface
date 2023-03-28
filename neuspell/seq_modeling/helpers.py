@@ -283,7 +283,7 @@ def labelize(batch_labels, vocab):
     tensor_ = pad_sequence(list_tensors, batch_first=True, padding_value=token2idx[pad_token])
     print("tensor_",tensor_)
     
-    return tensor_, ([len(x) for x in list_list]).clone().detach().requires_grad_(True)
+    return tensor_, torch.tensor([len(x) for x in list_list]).long()
 
 
 def tokenize(batch_sentences, vocab):
@@ -825,13 +825,17 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
    
         # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])
         # print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'])
-        batch_attention_masks = pad_sequence(
-            [torch.tensor(encoded_dict["attention_mask"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
-            padding_value=0)
+        batch_attention_masks = pad_sequence([encoded_dict["attention_mask"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
+
+
+        # batch_attention_masks = pad_sequence(
+        #     [torch.tensor(encoded_dict["attention_mask"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
+        #     padding_value=0)
         print("batch_attention_masks",batch_attention_masks)
-        batch_input_ids = pad_sequence(
-            [torch.tensor(encoded_dict["input_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
-            padding_value=0)
+        batch_input_ids = pad_sequence([encoded_dict["input_ids"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
+        # batch_input_ids = pad_sequence(
+        #     [torch.tensor(encoded_dict["input_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
+        #     padding_value=0)
         print("batch_input_ids",batch_input_ids)
         # batch_token_type_ids = pad_sequence(
         #     [torch.tensor(encoded_dict["token_type_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,

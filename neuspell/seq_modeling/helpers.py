@@ -812,8 +812,6 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # "token_type_ids": []
     }
     if len(valid_idxs) > 0:
-        for tokens in batch_tokens:
-            print("tokens", tokens)
         max_seq_len = max([len(tokens) for tokens in batch_tokens])
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,add_special_tokens =True, max_length = 514,truncation=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
@@ -822,16 +820,17 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
         # print("batch_encoded_dicts",batch_encoded_dicts)
 
-        for encoded_dict in batch_encoded_dicts:
-            print("encoded_dict['attention_mask']",encoded_dict["attention_mask"])
-        print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])
-        print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'])
+   
+        # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])
+        # print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'])
         batch_attention_masks = pad_sequence(
             [torch.tensor(encoded_dict["attention_mask"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
             padding_value=0)
+        print("batch_attention_masks",batch_attention_masks)
         batch_input_ids = pad_sequence(
             [torch.tensor(encoded_dict["input_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
             padding_value=0)
+        print("batch_input_ids",batch_input_ids)
         # batch_token_type_ids = pad_sequence(
         #     [torch.tensor(encoded_dict["token_type_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
         #     padding_value=0)
@@ -841,7 +840,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
                            "input_ids": batch_input_ids,
                            # "token_type_ids": batch_token_type_ids
                            }
-        # print("batch_bert_dict",batch_bert_dict)
+        print("batch_bert_dict",batch_bert_dict)
         # print("batch_splits",batch_splits)
     return batch_orginal_sentences, batch_noisy_sentences, batch_bert_dict, batch_splits
 

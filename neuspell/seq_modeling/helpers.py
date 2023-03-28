@@ -281,9 +281,10 @@ def labelize(batch_labels, vocab):
     list_tensors = [torch.tensor(x) for x in list_list]
     # print("list_tensors",list_tensors)
     tensor_ = pad_sequence(list_tensors, batch_first=True, padding_value=token2idx[pad_token])
-    # print("tensor_",tensor_)
-    print("torch.tensor([len(x) for x in list_list]).long()",torch.tensor([len(x) for x in list_list]).long())
-    return tensor_, torch.tensor([len(x) for x in list_list]).long()
+    print("tensor_",tensor_)
+    print("torch.tensor([len(x) for x in list_list]).long()",([len(x) for x in list_list]).clone().detach().long())
+    return tensor_, ([len(x) for x in list_list]).clone().detach().long()
+    # return tensor_, torch.tensor([len(x) for x in list_list]).long()
 
 
 def tokenize(batch_sentences, vocab):

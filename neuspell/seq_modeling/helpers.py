@@ -770,12 +770,12 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         if bert_pretrained_name_or_path:
             # BERT_TOKENIZER = transformers.BertTokenizer.from_pretrained("bert-base-cased")
             # BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
-            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
+            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True,use_fast=False)
             BERT_TOKENIZER.do_basic_tokenize = True
             BERT_TOKENIZER.tokenize_chinese_chars = False
         else:
             # BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
-            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
+            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True,use_fast=False)
             BERT_TOKENIZER.do_basic_tokenize = True
             BERT_TOKENIZER.tokenize_chinese_chars = False
 
@@ -813,11 +813,13 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # "token_type_ids": []
     }
     if len(valid_idxs) > 0:
+        for tokens in batch_tokens:
+            print("tokens", tokens)
         max_seq_len = max([len(tokens) for tokens in batch_tokens])
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,add_special_tokens =True, max_length = 514,truncation=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens), max_length=514, truncation=True, padding=True) for tokens in batch_tokens]
-        batch_encoded_dicts = [BERT_TOKENIZER.encode(tokens) for tokens in batch_tokens]
+        batch_encoded_dicts = [BERT_TOKENIZER.encode(tokens,is_split_into_words=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
 
         batch_attention_masks = pad_sequence(

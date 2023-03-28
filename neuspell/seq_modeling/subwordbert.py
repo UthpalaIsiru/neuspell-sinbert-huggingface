@@ -91,6 +91,7 @@ def model_predictions(model, data, vocab, device, batch_size=16):
             batch_labels, batch_sentences = batch_labels_, batch_sentences_
         batch_bert_inp = {k: v.to(device) for k, v in batch_bert_inp.items()}
         # set batch data for others
+        print("====================before labelize=================")
         batch_labels_ids, batch_lengths = labelize(batch_labels, vocab)
         print("===================after labelize =================")
         print("batch_labels_ids",batch_labels_ids)

@@ -822,7 +822,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
         print("batch_encoded_dicts",batch_encoded_dicts)
         for encoded_dict in batch_encoded_dicts:
-            print("encoded_dict["attention_mask"]",encoded_dict["attention_mask"])
+            print("encoded_dict['attention_mask']",encoded_dict["attention_mask"])
         batch_attention_masks = pad_sequence(
             [torch.tensor(encoded_dict["attention_mask"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
             padding_value=0)

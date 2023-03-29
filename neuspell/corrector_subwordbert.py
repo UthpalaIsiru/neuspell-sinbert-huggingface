@@ -191,8 +191,12 @@ class BertChecker(Corrector):
                 batch_labels = batch_labels.to(DEVICE)
                 print("batch_labels.to(DEVICE) batch_labels",batch_labels)
                 # forward
+                print("batch_bert_inp",batch_bert_inp)
+                print("batch_bert_splits",batch_bert_splits)
+                print("batch_labels",batch_labels)
                 model.train()
                 loss = model(batch_bert_inp, batch_bert_splits, targets=batch_labels)
+                print("loss",loss)
                 batch_loss = loss.cpu().detach().numpy()
                 train_loss += batch_loss
                 # backward

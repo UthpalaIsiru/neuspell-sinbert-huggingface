@@ -928,7 +928,8 @@ class SubwordBert(nn.Module):
         print("batch_size",batch_size)
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
-        bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
+        bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)
+        # bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
         print("bert_encodings",bert_encodings)
         # print("bert_encodings size",bert_encodings.ze.size())
         bert_encodings = self.bert_dropout(bert_encodings)

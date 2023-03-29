@@ -184,16 +184,9 @@ class BertChecker(Corrector):
                 batch_bert_inp = {k: v.to(DEVICE) for k, v in batch_bert_inp.items()}
                 # set batch data for others
                 batch_labels, batch_lengths = labelize(batch_labels, vocab)
-                print("===========after labelize in finetune")
-                print("batch_labels",batch_labels)
-                print("batch_lengths",batch_lengths)
                 # batch_lengths = batch_lengths.to(device)
                 batch_labels = batch_labels.to(DEVICE)
-                print("batch_labels.to(DEVICE) batch_labels",batch_labels)
                 # forward
-                print("batch_bert_inp",batch_bert_inp)
-                print("batch_bert_splits",batch_bert_splits)
-                print("batch_labels",batch_labels)
                 model.train()
                 loss = model(batch_bert_inp, batch_bert_splits, targets=batch_labels)
                 print("loss",loss)

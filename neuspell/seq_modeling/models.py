@@ -1018,14 +1018,14 @@ class SubwordBert(nn.Module):
             input_ids=input_ids,
             # attention_mask=attention_mask,
             # inputs_embeds=batch_bert_dict["input_ids"],
-            decoder_input_ids=input_ids
+            # decoder_input_ids=input_ids
             # token_type_ids=batch_bert_dict["token_type_ids"],
         ))
         bert_encodings= self.bert_model(
             input_ids=input_ids,
             # attention_mask=attention_mask,
             # inputs_embeds=batch_bert_dict["input_ids"],
-            decoder_input_ids=input_ids
+            # decoder_input_ids=input_ids
             # token_type_ids=batch_bert_dict["token_type_ids"],
         )
         print("bert_encodings",bert_encodings)

@@ -1008,6 +1008,8 @@ class SubwordBert(nn.Module):
         # cnn
         batch_size = len(batch_splits)
         print("batch_size",batch_size)
+        print("input_ids",input_ids)
+        print("attention_mask",attention_mask)
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
         bert_encodings, cls_encoding = self.bert_model(

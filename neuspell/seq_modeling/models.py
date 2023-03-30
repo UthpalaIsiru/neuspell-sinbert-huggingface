@@ -1009,6 +1009,7 @@ class SubwordBert(nn.Module):
         batch_size = len(batch_splits)
         print("batch_size",batch_size)
         print("input_ids",input_ids)
+        print("input_ids size",input_ids.size())
         print("attention_mask",attention_mask)
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
@@ -1018,7 +1019,7 @@ class SubwordBert(nn.Module):
             # inputs_embeds=batch_bert_dict["input_ids"],
             # decoder_input_ids=batch_bert_dict["input_ids"]
             # token_type_ids=batch_bert_dict["token_type_ids"],
-        )[0]
+        )
         print("bert_encodings",bert_encodings)
         print("cls_encoding",cls_encoding)
         bert_encodings = self.bert_dropout(bert_encodings)

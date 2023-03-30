@@ -915,17 +915,79 @@ class SubwordBert(nn.Module):
         print("out", out)
         return out
 
-    
+    # def forward(self,
+        #         batch_bert_dict: "{'input_ids':tensor, 'attention_mask':tensor}",
+        #         # batch_bert_dict: "{'input_ids':tensor, 'attention_mask':tensor, 'token_type_ids':tensor}",
+        #         batch_splits: "list[list[int]]",
+        #         aux_word_embs: "tensor" = None,
+        #         targets: "tensor" = None,
+        #         topk=1): 
+        # print("================debugging forward===============")
+        # print("batch_bert_dict",batch_bert_dict)
+        # # cnn
+        # batch_size = len(batch_splits)
+        # print("batch_size",batch_size)
+        # # bert
+        # # BS X max_nsubwords x self.bertmodule_outdim
+        # bert_encodings = self.bert_model(batch_bert_dict["input_ids"],batch_bert_dict["attention_mask"], return_dict=False)
+        # # bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
+        # print("bert_encodings",bert_encodings)
+        # # print("bert_encodings size",bert_encodings.ze.size())
+        # bert_encodings = self.bert_dropout(bert_encodings)
+        # # BS X max_nwords x self.bertmodule_outdim
+        # bert_merged_encodings = pad_sequence(
+        #     [self.get_merged_encodings(bert_seq_encodings, seq_splits, mode='avg') \
+        #      for bert_seq_encodings, seq_splits in zip(bert_encodings, batch_splits)],
+        #     batch_first=True,
+        #     padding_value=0
+        # )
+        # print("bert_merged_encodings",bert_merged_encodings)
+
+        # # concat aux_embs
+        # # if not None, the expected dim for aux_word_embs: [BS,max_nwords,*]
+        # intermediate_encodings = bert_merged_encodings
+        # if aux_word_embs is not None:
+        #     intermediate_encodings = torch.cat((intermediate_encodings, aux_word_embs), dim=2)
+        # print("intermediate_encodings",intermediate_encodings)
+        # # dense
+        # # [BS,max_nwords,*] or [BS,max_nwords,self.bertmodule_outdim]->[BS,max_nwords,output_dim]
+        # logits = self.dense(self.dropout(intermediate_encodings))
+        # # logits = self.dense(self.dropout(intermediate_encodings))
+        # logits = self.dense(intermediate_encodings)
+
+        # # loss
+        # if targets is not None:
+        #     assert len(targets) == batch_size  # targets:[[BS,max_nwords]
+        #     logits_permuted = logits.permute(0, 2, 1)  # logits: [BS,output_dim,max_nwords]
+        #     loss = self.criterion(logits_permuted, targets)
+
+        # # eval preds
+        # if not self.training:
+        #     probs = F.softmax(logits, dim=-1)  # [BS,max_nwords,output_dim]
+        #     if topk > 1:
+        #         topk_values, topk_inds = \
+        #             torch.topk(probs, topk, dim=-1, largest=True,
+        #                        sorted=True)  # -> (Tensor, LongTensor) of [BS,max_nwords,topk]
+        #     elif topk == 1:
+        #         topk_inds = torch.argmax(probs, dim=-1)  # [BS,max_nwords]
+
+        #     # Note that for those positions with padded_idx,
+        #     #   the arg_max_prob above computes a index because 
+        #     #   the bias term leads to non-uniform values in those positions
+
+        #     return loss.cpu().detach().numpy(), topk_inds.cpu().detach().numpy()
+        # return loss
+
     def forward(self,
                 batch_bert_dict: "{'input_ids':tensor, 'attention_mask':tensor}",
                 batch_splits: "list[list[int]]",
                 aux_word_embs: "tensor" = None,
                 targets: "tensor" = None,
                 topk = 1):
-        
+        print("=======debugging forward============")
         # cnn
         batch_size = len(batch_splits)
-
+        print("batch_size",batch_size)
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
         bert_encodings, cls_encoding = self.bert_model(
@@ -933,8 +995,9 @@ class SubwordBert(nn.Module):
             attention_mask=batch_bert_dict["attention_mask"],
             # token_type_ids=batch_bert_dict["token_type_ids"],
         )
-        bert_encodings = self.bert_dropout(bert_encodings)
         print("bert_encodings",bert_encodings)
+        print("cls_encoding",cls_encoding)
+        bert_encodings = self.bert_dropout(bert_encodings)
         # BS X max_nwords x self.bertmodule_outdim
         bert_merged_encodings = pad_sequence(
             [self.get_merged_encodings(bert_seq_encodings, seq_splits, mode='avg') \
@@ -942,48 +1005,36 @@ class SubwordBert(nn.Module):
             batch_first=True,
             padding_value=0
         )
-        # print("bert_encodings size",bert_encodings.ze.size())
-        bert_encodings = self.bert_dropout(bert_encodings)
-        # BS X max_nwords x self.bertmodule_outdim
-        bert_merged_encodings = pad_sequence(
-            [self.get_merged_encodings(bert_seq_encodings, seq_splits, mode='avg') \
-             for bert_seq_encodings, seq_splits in zip(bert_encodings, batch_splits)],
-            batch_first=True,
-            padding_value=0
-        )
-        print("bert_merged_encodings",bert_merged_encodings)
 
         # concat aux_embs
         # if not None, the expected dim for aux_word_embs: [BS,max_nwords,*]
         intermediate_encodings = bert_merged_encodings
         if aux_word_embs is not None:
-            intermediate_encodings = torch.cat((intermediate_encodings, aux_word_embs), dim=2)
-        print("intermediate_encodings",intermediate_encodings)
+            intermediate_encodings = torch.cat((intermediate_encodings,aux_word_embs),dim=2)
+
         # dense
         # [BS,max_nwords,*] or [BS,max_nwords,self.bertmodule_outdim]->[BS,max_nwords,output_dim]
-        logits = self.dense(self.dropout(intermediate_encodings))
         # logits = self.dense(self.dropout(intermediate_encodings))
         logits = self.dense(intermediate_encodings)
 
         # loss
         if targets is not None:
-            assert len(targets) == batch_size  # targets:[[BS,max_nwords]
-            logits_permuted = logits.permute(0, 2, 1)  # logits: [BS,output_dim,max_nwords]
-            loss = self.criterion(logits_permuted, targets)
-
+            assert len(targets)==batch_size                # targets:[[BS,max_nwords]
+            logits_permuted = logits.permute(0, 2, 1)               # logits: [BS,output_dim,max_nwords]
+            loss = self.criterion(logits_permuted,targets)
+        
         # eval preds
         if not self.training:
-            probs = F.softmax(logits, dim=-1)  # [BS,max_nwords,output_dim]
-            if topk > 1:
+            probs = F.softmax(logits,dim=-1)            # [BS,max_nwords,output_dim]
+            if topk>1:
                 topk_values, topk_inds = \
-                    torch.topk(probs, topk, dim=-1, largest=True,
-                               sorted=True)  # -> (Tensor, LongTensor) of [BS,max_nwords,topk]
-            elif topk == 1:
-                topk_inds = torch.argmax(probs, dim=-1)  # [BS,max_nwords]
+                    torch.topk(probs, topk, dim=-1, largest=True, sorted=True)  # -> (Tensor, LongTensor) of [BS,max_nwords,topk]
+            elif topk==1:
+                topk_inds = torch.argmax(probs,dim=-1)   # [BS,max_nwords]
 
             # Note that for those positions with padded_idx,
             #   the arg_max_prob above computes a index because 
             #   the bias term leads to non-uniform values in those positions
-
+            
             return loss.cpu().detach().numpy(), topk_inds.cpu().detach().numpy()
         return loss

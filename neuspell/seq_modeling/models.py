@@ -1012,13 +1012,13 @@ class SubwordBert(nn.Module):
         print("attention_mask",attention_mask)
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
-        bert_encodings, cls_encoding = self.bert_model(
+        bert_encodings= self.bert_model(
             input_ids=input_ids,
             attention_mask=attention_mask,
             # inputs_embeds=batch_bert_dict["input_ids"],
             # decoder_input_ids=batch_bert_dict["input_ids"]
             # token_type_ids=batch_bert_dict["token_type_ids"],
-        )
+        )[0]
         print("bert_encodings",bert_encodings)
         print("cls_encoding",cls_encoding)
         bert_encodings = self.bert_dropout(bert_encodings)

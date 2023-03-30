@@ -894,7 +894,7 @@ class BertSCLSTM(nn.Module):
 #         # See https://pytorch.org/docs/stable/nn.html#crossentropyloss
 #         self.criterion = nn.CrossEntropyLoss(reduction='mean', ignore_index=padding_idx)
 class SubwordBert(nn.Module):
-    def __init__(self, screp_dim, padding_idx, output_dim,bert_pretrained_name_or_path=None, freeze_bert=False):
+    def __init__(self, padding_idx, output_dim,bert_pretrained_name_or_path=None, freeze_bert=False):
         super(SubwordBert,self).__init__()
 
         self.bert_dropout = torch.nn.Dropout(0.2)

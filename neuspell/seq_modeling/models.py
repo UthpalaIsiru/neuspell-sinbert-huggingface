@@ -867,33 +867,51 @@ class BertSCLSTM(nn.Module):
 # SubwordBert
 #################################################
 
+# class SubwordBert(nn.Module):
+#     def __init__(self, padding_idx, output_dim, bert_pretrained_name_or_path=None, freeze_bert=False):
+#         super(SubwordBert, self).__init__()
+
+#         self.bert_dropout = torch.nn.Dropout(0.2)
+#         # self.bert_model = get_pretrained_bert(bert_pretrained_name_or_path)
+#         self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
+#         # self.bert_model = AutoModelForMaskedLM.from_pretrained("xlm-roberta-base")
+
+#         print("self.bert_model",self.bert_model)
+
+#         self.bertmodule_outdim = self.bert_model.config.vocab_size #changed the outdim from hidden-size to vocab_size
+#         # self.bertmodule_outdim = self.bert_model.config.hidden_size
+#         if freeze_bert:
+#             # Uncomment to freeze BERT layers
+#             for param in self.bert_model.parameters():
+#                 param.requires_grad = False
+
+#         # output module
+#         assert output_dim > 0
+#         self.dropout = nn.Dropout(p=0.4)
+#         self.dense = nn.Linear(self.bertmodule_outdim, output_dim)
+
+#         # loss
+#         # See https://pytorch.org/docs/stable/nn.html#crossentropyloss
+#         self.criterion = nn.CrossEntropyLoss(reduction='mean', ignore_index=padding_idx)
 class SubwordBert(nn.Module):
-    def __init__(self, padding_idx, output_dim, bert_pretrained_name_or_path=None, freeze_bert=False):
-        super(SubwordBert, self).__init__()
+    def __init__(self, screp_dim, padding_idx, output_dim):
+        super(SubwordBert,self).__init__()
 
         self.bert_dropout = torch.nn.Dropout(0.2)
-        # self.bert_model = get_pretrained_bert(bert_pretrained_name_or_path)
-        self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
-        # self.bert_model = AutoModelForMaskedLM.from_pretrained("xlm-roberta-base")
-
-        print("self.bert_model",self.bert_model)
-
-        self.bertmodule_outdim = self.bert_model.config.vocab_size #changed the outdim from hidden-size to vocab_size
-        # self.bertmodule_outdim = self.bert_model.config.hidden_size
-        if freeze_bert:
-            # Uncomment to freeze BERT layers
-            for param in self.bert_model.parameters():
-                param.requires_grad = False
+        self.bert_model = transformers.BertModel.from_pretrained("NLPC-UOM/SinBERT-large")
+        self.bertmodule_outdim = self.bert_model.config.hidden_size
+        # Uncomment to freeze BERT layers
+        # for param in self.bert_model.parameters():
+        #     param.requires_grad = False
 
         # output module
-        assert output_dim > 0
-        self.dropout = nn.Dropout(p=0.4)
-        self.dense = nn.Linear(self.bertmodule_outdim, output_dim)
+        assert output_dim>0
+        # self.dropout = nn.Dropout(p=0.4)
+        self.dense = nn.Linear(self.bertmodule_outdim,output_dim)
 
         # loss
         # See https://pytorch.org/docs/stable/nn.html#crossentropyloss
-        self.criterion = nn.CrossEntropyLoss(reduction='mean', ignore_index=padding_idx)
-
+        self.criterion = nn.CrossEntropyLoss(reduction='mean',ignore_index=padding_idx)
     @property
     def device(self) -> torch.device:
         return next(self.parameters()).device

@@ -903,7 +903,7 @@ class SubwordBert(nn.Module):
         # Uncomment to freeze BERT layers
         # for param in self.bert_model.parameters():
         #     param.requires_grad = False
-
+        print("self.bert_model",self.bert_model)
         # output module
         assert output_dim>0
         # self.dropout = nn.Dropout(p=0.4)
@@ -998,8 +998,8 @@ class SubwordBert(nn.Module):
 
     def forward(self,
                 # batch_bert_dict: "{'input_ids':tensor, 'attention_mask':tensor}",
-                input_ids: "tensor",
-                attention_mask: "tensor",
+                input_ids: "tensor" = None,
+                attention_mask: "tensor" = None,
                 batch_splits: "list[list[int]]",
                 aux_word_embs: "tensor" = None,
                 targets: "tensor" = None,

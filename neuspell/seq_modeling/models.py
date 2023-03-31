@@ -998,8 +998,8 @@ class SubwordBert(nn.Module):
 
     def forward(self,
                 # batch_bert_dict: "{'input_ids':tensor, 'attention_mask':tensor}",
-                input_ids: "tensor" = None,
-                attention_mask: "tensor" = None,
+                input_ids: "tensor",
+                attention_mask: "tensor",
                 batch_splits: "list[list[int]]",
                 aux_word_embs: "tensor" = None,
                 targets: "tensor" = None,

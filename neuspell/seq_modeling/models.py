@@ -1005,6 +1005,7 @@ class SubwordBert(nn.Module):
                 targets: "tensor" = None,
                 topk = 1):
         print("=======debugging forward============")
+        print("batch_bert_dict",batch_bert_dict)
         # cnn
         batch_size = len(batch_splits)
         print("batch_size",batch_size)
@@ -1013,10 +1014,11 @@ class SubwordBert(nn.Module):
         # BS X max_nsubwords x self.bertmodule_outdim
         print("==============================================")
         print("================self.bert_model===============",self.bert_model(**batch_bert_dict, return_dict=False)[0])
-        a,b = self.bert_model(**batch_bert_dict, return_dict=False)[0]
+        a,b,c = self.bert_model(**batch_bert_dict, return_dict=False)[0]
         # bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
         print("a",a)
         print("b",b)
+        print("c",c)
         bert_encodings = self.bert_dropout(bert_encodings)
         # BS X max_nwords x self.bertmodule_outdim
         bert_merged_encodings = pad_sequence(

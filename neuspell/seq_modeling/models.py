@@ -1013,7 +1013,7 @@ class SubwordBert(nn.Module):
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
         print("==============================================")
-        print("================self.bert_model===============",self.bert_model(**batch_bert_dict, return_dict=False)[0])
+        # print("================self.bert_model===============",self.bert_model(**batch_bert_dict, return_dict=False)[0])
         bert_encodings = self.bert_model(
             batch_bert_dict["input_ids"],
             attention_mask=batch_bert_dict["attention_mask"],

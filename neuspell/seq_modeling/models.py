@@ -1003,7 +1003,7 @@ class SubwordBert(nn.Module):
                 batch_splits: "list[list[int]]",
                 aux_word_embs: "tensor" = None,
                 targets: "tensor" = None,
-                topk = 100000): #topk
+                topk = 1): 
         print("=======debugging forward============")
         print("batch_bert_dict",batch_bert_dict)
         # cnn

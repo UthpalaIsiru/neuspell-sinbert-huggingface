@@ -825,10 +825,10 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
 
    
         # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])
-        print("batch_encoded_dicts",batch_encoded_dicts)
-        print("input = encoding['attention_mask']",batch_encoded_dicts['attention_mask'])
+        # print("batch_encoded_dicts",batch_encoded_dicts)
+        print("batch_encoded_dicts[0]",batch_encoded_dicts[0])
         # print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'][0])
-        batch_attention_masks = pad_sequence([encoded_dict["attention_mask"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
+        batch_attention_masks = pad_sequence([encoded_dict["attention_mask"].clone().detach() for encoded_dict in batch_encoded_dicts[0]], batch_first=True)
 
 
         # batch_attention_masks = pad_sequence(

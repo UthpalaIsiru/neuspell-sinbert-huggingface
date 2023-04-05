@@ -1014,11 +1014,12 @@ class SubwordBert(nn.Module):
         # BS X max_nsubwords x self.bertmodule_outdim
         print("==============================================")
         print("================self.bert_model===============",self.bert_model(**batch_bert_dict, return_dict=False)[0])
-        a,b,c = self.bert_model(**batch_bert_dict, return_dict=False)[0]
-        # bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
-        print("a",a)
-        print("b",b)
-        print("c",c)
+        bert_encodings, cls_encoding = self.bert_model(
+            input_ids=batch_bert_dict["input_ids"],
+            attention_mask=batch_bert_dict["attention_mask"],
+        )        # bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
+        print("bert_encodings",bert_encodings)
+
         bert_encodings = self.bert_dropout(bert_encodings)
         # BS X max_nwords x self.bertmodule_outdim
         bert_merged_encodings = pad_sequence(

@@ -352,6 +352,7 @@ if __name__=="__main__":
                            intersect=vocab_ref,
                            load_char_tokens=True)
         save_vocab_dict(VOCAB_PATH, vocab)
+        print("===============calling vocab==========")
     print("")
     #print(vocab["token_freq"])
     print([*vocab.keys()])

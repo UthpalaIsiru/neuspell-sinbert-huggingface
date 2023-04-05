@@ -825,14 +825,16 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
 
    
         # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])
+        print("batch_encoded_dicts",batch_encoded_dicts)
         print("input = encoding['attention_mask']",batch_encoded_dicts['attention_mask'])
-        print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'][0])
+        # print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'][0])
         batch_attention_masks = pad_sequence([encoded_dict["attention_mask"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
 
 
         # batch_attention_masks = pad_sequence(
         #     [torch.tensor(encoded_dict["attention_mask"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
         #     padding_value=0)
+        print("batch_attention_masks ",batch_attention_masks)
         print("batch_attention_masks size",batch_attention_masks.size())
         batch_input_ids = pad_sequence([encoded_dict["input_ids"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
         # batch_input_ids = pad_sequence(

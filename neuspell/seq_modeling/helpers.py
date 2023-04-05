@@ -816,21 +816,20 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     }
     if len(valid_idxs) > 0:
         max_seq_len = max([len(tokens) for tokens in batch_tokens])
-        print("batch_tokens size",len(batch_tokens))
+        # print("batch_tokens size",len(batch_tokens))
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,add_special_tokens =True, max_length = 514,truncation=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens), max_length=514, truncation=True, padding=True) for tokens in batch_tokens]
         batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens, add_special_tokens = True,    truncation = True, padding = "max_length", return_attention_mask = True, return_tensors = "pt") for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
-        print("batch_encoded_dicts size",len(batch_encoded_dicts))
+        # print("batch_encoded_dicts size",len(batch_encoded_dicts))
 
    
         # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])
         # print("batch_encoded_dicts",batch_encoded_dicts)
-        print("batch_encoded_dicts[0]",batch_encoded_dicts)
+        # print("batch_encoded_dicts[0]",batch_encoded_dicts)
         # print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'][0])
-        # batch_attention_masks = pad_sequence([encoded_dict["attention_mask"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
-        batch_attention_masks = pad_sequence(batch_encoded_dicts[0]["attention_mask"].clone().detach(), batch_first=True)
+        batch_attention_masks = pad_sequence([encoded_dict["attention_mask"][0].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
 
 
         # batch_attention_masks = pad_sequence(
@@ -838,13 +837,12 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         #     padding_value=0)
         print("batch_attention_masks ",batch_attention_masks)
         print("batch_attention_masks size",batch_attention_masks.size())
-        # batch_input_ids = pad_sequence([encoded_dict["input_ids"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
-        batch_input_ids = pad_sequence(batch_encoded_dicts[0]["input_ids"].clone().detach(), batch_first=True)
+        batch_input_ids = pad_sequence([encoded_dict["input_ids"][0].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
         # batch_input_ids = pad_sequence(
         #     [torch.tensor(encoded_dict["input_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
         #     padding_value=0)
         # print("batch_input_ids",batch_input_ids)
-        # print("batch_input_ids size",batch_input_ids.size())
+        print("batch_input_ids size",batch_input_ids.size())
         # batch_token_type_ids = pad_sequence(
         #     [torch.tensor(encoded_dict["token_type_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
         #     padding_value=0)

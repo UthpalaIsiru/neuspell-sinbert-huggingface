@@ -1018,7 +1018,12 @@ class SubwordBert(nn.Module):
             batch_bert_dict["input_ids"],
             attention_mask=batch_bert_dict["attention_mask"],
             return_dict=False
-        )[0]       
+        )[:-1]       
+        # bert_encodings = self.bert_model(
+        #     batch_bert_dict["input_ids"],
+        #     attention_mask=batch_bert_dict["attention_mask"],
+        #     return_dict=False
+        # )[0]       
          # bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
         print("bert_encodings",bert_encodings)
 

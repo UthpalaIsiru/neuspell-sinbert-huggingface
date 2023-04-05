@@ -781,7 +781,8 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
             BERT_TOKENIZER.tokenize_chinese_chars = False
 
     # print("model max length BEFORE", BERT_TOKENIZER.model_max_length)
-    BERT_TOKENIZER.model_max_length = 514
+    BERT_TOKENIZER.model_max_length = 10
+    # BERT_TOKENIZER.model_max_length = 514
     # print("model max length AFTER", BERT_TOKENIZER.model_max_length)
     # print("================before tokenizing======================")
     # print("batch_orginal_sentences", batch_orginal_sentences)
@@ -826,7 +827,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
    
         # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])
         # print("batch_encoded_dicts",batch_encoded_dicts)
-        print("batch_encoded_dicts[0]",batch_encoded_dicts[0])
+        print("batch_encoded_dicts[0]",batch_encoded_dicts)
         # print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'][0])
         # batch_attention_masks = pad_sequence([encoded_dict["attention_mask"].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
         batch_attention_masks = pad_sequence(batch_encoded_dicts[0]["attention_mask"].clone().detach(), batch_first=True)

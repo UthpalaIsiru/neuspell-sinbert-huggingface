@@ -699,7 +699,10 @@ def _custom_bert_tokenize_sentences(list_of_texts):
 
 # Tokenizing clean dataset
 def _simple_bert_tokenize_sentences(list_of_texts):
-    return [merge_subtokens(BERT_TOKENIZER.tokenize(text)[:BERT_MAX_SEQ_LEN - 2]) for text in list_of_texts]
+    for text in list_of_texts:
+        print("text",text)
+        print("BERT_TOKENIZER.tokenize(text)",BERT_TOKENIZER.tokenize(text))
+    # return [merge_subtokens(BERT_TOKENIZER.tokenize(text)[:BERT_MAX_SEQ_LEN - 2]) for text in list_of_texts]
 
 
 def bert_tokenize(batch_sentences):

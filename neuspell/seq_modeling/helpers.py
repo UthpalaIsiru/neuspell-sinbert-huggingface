@@ -11,7 +11,7 @@ from torch.nn.utils.rnn import pad_sequence
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForMaskedLM, AutoModelForSequenceClassification
 
-BERT_MAX_SEQ_LEN = 512
+BERT_MAX_SEQ_LEN = 514 #bert_max_seq_len
 BERT_TOKENIZER = None
 
 
@@ -629,14 +629,15 @@ def save_vocab_dict(path_: str, vocab_: dict):
 def merge_subtokens(tokens: List):
     merged_tokens = []
     for token in tokens:
+        print("token", token)
         if token.startswith("##"):
             merged_tokens[-1] = merged_tokens[-1] + token[2:]
         else:
             merged_tokens.append(token)
     # print("==================merge_subtokens================")
-    # print("merged_tokens",merged_tokens)
+    print("merged_tokens",merged_tokens)
     text = " ".join(merged_tokens)
-    # print("text",text)
+    print("text",text)
     return text
     
 # def _tokenize_untokenize(input_text: str):
@@ -772,13 +773,13 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
             # BERT_TOKENIZER = transformers.BertTokenizer.from_pretrained("bert-base-cased")
             # BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
             BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True,use_fast=False)
-            BERT_TOKENIZER.do_basic_tokenize = True
-            BERT_TOKENIZER.tokenize_chinese_chars = False
+            # BERT_TOKENIZER.do_basic_tokenize = True
+            # BERT_TOKENIZER.tokenize_chinese_chars = False
         else:
             # BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
             BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True,use_fast=False)
-            BERT_TOKENIZER.do_basic_tokenize = True
-            BERT_TOKENIZER.tokenize_chinese_chars = False
+            # BERT_TOKENIZER.do_basic_tokenize = True
+            # BERT_TOKENIZER.tokenize_chinese_chars = False
 
     # print("model max length BEFORE", BERT_TOKENIZER.model_max_length)
     BERT_TOKENIZER.model_max_length = 514
@@ -792,21 +793,21 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
 
     _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
     # print("================after tokenizing======================")
-    print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
+    # print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
 
     valid_idxs = [idx for idx, (a, b) in enumerate(zip(_batch_orginal_sentences, _batch_noisy_sentences)) if
                   len(a.split()) == len(b.split())]
-    print("55555555555555555 valid_idxs",valid_idxs)
+    # print("55555555555555555 valid_idxs",valid_idxs)
     batch_orginal_sentences = [line for idx, line in enumerate(_batch_orginal_sentences) if idx in valid_idxs]
     batch_noisy_sentences = [line for idx, line in enumerate(_batch_noisy_sentences) if idx in valid_idxs]
     
-    print("after enumerating ")
-    print("6666666666666666 batch_orginal_sentences",batch_orginal_sentences)
-    print("7777777777777777 batch_noisy_sentences",batch_noisy_sentences)
+    # print("after enumerating ")
+    # print("6666666666666666 batch_orginal_sentences",batch_orginal_sentences)
+    # print("7777777777777777 batch_noisy_sentences",batch_noisy_sentences)
 
     batch_tokens = [line for idx, line in enumerate(_batch_tokens) if idx in valid_idxs]
     batch_splits = [line for idx, line in enumerate(_batch_splits) if idx in valid_idxs]
-    print("99999999999999999 batch_splits", batch_splits)
+    # print("99999999999999999 batch_splits", batch_splits)
     batch_bert_dict = {
         "attention_mask": [],
         "input_ids": [],

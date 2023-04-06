@@ -749,9 +749,9 @@ def bert_tokenize(batch_sentences):
 
 
 def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_sentences, bert_pretrained_name_or_path=None):
-    # print("Log for debugging")
-    # print("111111111 batch_orginal_sentences",batch_orginal_sentences)
-    # print("222222222 batch_noisy_sentences",batch_noisy_sentences)
+    print("Log for debugging")
+    print("111111111 batch_orginal_sentences",batch_orginal_sentences)
+    print("222222222 batch_noisy_sentences",batch_noisy_sentences)
     """
     inputs:
         batch_noisy_sentences: List[str]

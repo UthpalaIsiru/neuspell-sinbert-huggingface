@@ -997,7 +997,7 @@ class SubwordBert(nn.Module):
         # return loss
 
     def forward(self,
-                batch_bert_dict: "{'input_ids':tensor, 'attention_mask':tensor}",
+                batch_bert_dict: "{'input_ids':tensor, 'attention_mask':tensor,'batch_token_type_ids': tensor},
                 # input_ids: "tensor",
                 # attention_mask: "tensor",
                 batch_splits: "list[list[int]]",
@@ -1017,6 +1017,7 @@ class SubwordBert(nn.Module):
         bert_encodings = self.bert_model(
             batch_bert_dict["input_ids"],
             attention_mask=batch_bert_dict["attention_mask"],
+            token_type_ids=batch_bert_dict["batch_token_type_ids"],
             return_dict=False
         )[0]       
         # bert_encodings = self.bert_model(

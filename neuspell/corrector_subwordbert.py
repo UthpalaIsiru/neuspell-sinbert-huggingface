@@ -52,7 +52,7 @@ class BertChecker(Corrector):
             test_data = load_data(x, y, z)
             _ = model_inference(self.model,
                                 test_data,
-                                topk=100000, #topk
+                                topk=1, 
                                 device=self.device,
                                 batch_size=batch_size,
                                 vocab_=self.vocab)

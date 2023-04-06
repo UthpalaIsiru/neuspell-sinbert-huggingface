@@ -930,7 +930,6 @@ class SubwordBert(nn.Module):
             out = torch.sum(batched_encodings, dim=1)
         else:
             raise Exception("Not Implemented")
-        print("out", out)
         return out
 
     # def forward(self,
@@ -1005,16 +1004,11 @@ class SubwordBert(nn.Module):
                 aux_word_embs: "tensor" = None,
                 targets: "tensor" = None,
                 topk = 1): 
-        print("=======debugging forward============")
-        print("batch_bert_dict",batch_bert_dict)
         # cnn
         batch_size = len(batch_splits)
-        print("batch_size",batch_size)
   
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
-        print("==============================================")
-        print("================batch_bert_dict['input_ids'] size===============",batch_bert_dict["input_ids"].size())
         bert_encodings = self.bert_model(
             batch_bert_dict["input_ids"],
             attention_mask=batch_bert_dict["attention_mask"],
@@ -1027,7 +1021,6 @@ class SubwordBert(nn.Module):
         #     return_dict=False
         # )[0]       
          # bert_encodings = self.bert_model(**batch_bert_dict, return_dict=False)[0]
-        print("bert_encodings",bert_encodings)
 
         bert_encodings = self.bert_dropout(bert_encodings)
         # BS X max_nwords x self.bertmodule_outdim

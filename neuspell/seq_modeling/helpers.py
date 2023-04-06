@@ -810,7 +810,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     batch_bert_dict = {
         "attention_mask": [],
         "input_ids": [],
-        "token_type_ids": []
+        # "token_type_ids": []
     }
     if len(valid_idxs) > 0:
         max_seq_len = max([len(tokens) for tokens in batch_tokens])
@@ -827,25 +827,25 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # print("batch_encoded_dicts",batch_encoded_dicts)
         # print("batch_encoded_dicts[0]",batch_encoded_dicts)
         # print("input = encoding['attention_mask'][0]",batch_encoded_dicts['attention_mask'][0])
-        batch_attention_masks = pad_sequence([encoded_dict["attention_mask"][0] for encoded_dict in batch_encoded_dicts], batch_first=True)
+        batch_attention_masks = pad_sequence([encoded_dict["attention_mask"][0] for encoded_dict in batch_encoded_dicts], batch_first=True,padding_value=0)
         # batch_attention_masks = pad_sequence([encoded_dict["attention_mask"][0].clone().detach() for encoded_dict in batch_encoded_dicts], batch_first=True)
 
 
         # batch_attention_masks = pad_sequence(
         #     [torch.tensor(encoded_dict["attention_mask"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
         #     padding_value=0)
-        batch_input_ids = pad_sequence([encoded_dict["input_ids"][0] for encoded_dict in batch_encoded_dicts], batch_first=True)
+        batch_input_ids = pad_sequence([encoded_dict["input_ids"][0] for encoded_dict in batch_encoded_dicts], batch_first=True,padding_value=0)
         # batch_input_ids = pad_sequence(
         #     [torch.tensor(encoded_dict["input_ids"]) for encoded_dict in batch_encoded_dicts], batch_first=True,
         #     padding_value=0)
         # print("batch_input_ids",batch_input_ids)
-        batch_token_type_ids = pad_sequence(
-            [torch.tensor(encoded_dict["token_type_ids"][0]) for encoded_dict in batch_encoded_dicts], batch_first=True)
+        # batch_token_type_ids = pad_sequence(
+        #     [torch.tensor(encoded_dict["token_type_ids"][0]) for encoded_dict in batch_encoded_dicts], batch_first=True,padding_value=0)
      
    
         batch_bert_dict = {"attention_mask": batch_attention_masks,
                            "input_ids": batch_input_ids,
-                           "token_type_ids": batch_token_type_ids
+                        #    "token_type_ids": batch_token_type_ids
                            }
         # print("batch_bert_dict",batch_bert_dict)
         # print("batch_splits",batch_splits)

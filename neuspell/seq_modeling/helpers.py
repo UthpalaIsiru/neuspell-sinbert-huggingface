@@ -822,7 +822,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,add_special_tokens =True, max_length = 514,truncation=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens), max_length=514, truncation=True, padding=True) for tokens in batch_tokens]
-        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens, add_special_tokens = True,    truncation = True, padding = "max_length", return_attention_mask = True, return_tensors = "pt") for tokens in batch_tokens]
+        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens, add_special_tokens = True,    truncation = True, padding = "max_length", return_attention_mask = True, return_tensors = "pt") for tokens in batch_tokens[0]]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
         # print("batch_encoded_dicts size",len(batch_encoded_dicts))
 

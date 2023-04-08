@@ -780,12 +780,12 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         if bert_pretrained_name_or_path:
             # BERT_TOKENIZER = transformers.BertTokenizer.from_pretrained("bert-base-cased")
             # BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
-            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
+            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True,use_fast=False)
             # BERT_TOKENIZER.do_basic_tokenize = True
             # BERT_TOKENIZER.tokenize_chinese_chars = False
         else:
             # BERT_TOKENIZER = AutoTokenizer.from_pretrained("xlm-roberta-base", add_prefix_space=True)
-            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True)
+            BERT_TOKENIZER = AutoTokenizer.from_pretrained("NLPC-UOM/SinBERT-large", add_prefix_space=True,use_fast=False)
             # BERT_TOKENIZER.do_basic_tokenize = True
             # BERT_TOKENIZER.tokenize_chinese_chars = False
 
@@ -829,7 +829,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens), max_length=514, truncation=True, padding=True) for tokens in batch_tokens]
         batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens, add_special_tokens = True,    truncation = True, padding = "max_length", return_attention_mask = True, return_tensors = "pt") for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
-        # print("batch_encoded_dicts size",len(batch_encoded_dicts))
+        print("batch_encoded_dicts ",batch_encoded_dicts)
 
    
         # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])

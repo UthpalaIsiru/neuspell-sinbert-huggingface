@@ -695,6 +695,7 @@ def _custom_bert_tokenize_sentence(input_text):
 # Tokenizing noisy dataset
 def _custom_bert_tokenize_sentences(list_of_texts):
     out = [_custom_bert_tokenize_sentence(text) for text in list_of_texts]
+    print("out",out)
     texts, tokens, split_sizes = list(zip(*out))
     print("texts",texts)
     print("tokens",tokens)
@@ -814,7 +815,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
 
     batch_tokens = [line for idx, line in enumerate(_batch_tokens) if idx in valid_idxs]
     batch_splits = [line for idx, line in enumerate(_batch_splits) if idx in valid_idxs]
-    # print("99999999999999999 batch_splits", batch_splits)
+    print("99999999999999999 batch_splits", batch_splits)
     batch_bert_dict = {
         "attention_mask": [],
         "input_ids": [],

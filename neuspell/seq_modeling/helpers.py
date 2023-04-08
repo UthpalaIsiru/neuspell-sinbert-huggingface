@@ -11,7 +11,7 @@ from torch.nn.utils.rnn import pad_sequence
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForMaskedLM, AutoModelForSequenceClassification
 
-BERT_MAX_SEQ_LEN = 514 #bert_max_seq_len
+BERT_MAX_SEQ_LEN = 512 #bert_max_seq_len
 BERT_TOKENIZER = None
 
 
@@ -630,6 +630,7 @@ def merge_subtokens(tokens: List):
     merged_tokens = []
     for token in tokens:
         print("token", token)
+        print("token size",token.size())
         if token.startswith("##"):
             merged_tokens[-1] = merged_tokens[-1] + token[2:]
         else:
@@ -695,14 +696,17 @@ def _custom_bert_tokenize_sentence(input_text):
 def _custom_bert_tokenize_sentences(list_of_texts):
     out = [_custom_bert_tokenize_sentence(text) for text in list_of_texts]
     texts, tokens, split_sizes = list(zip(*out))
+    print("texts",texts)
+    print("tokens",tokens)
+    print("split_sizes",split_sizes)
     return [*texts], [*tokens], [*split_sizes]
 
 # Tokenizing clean dataset
 def _simple_bert_tokenize_sentences(list_of_texts):
-    for text in list_of_texts:
-        print("text",text)
-        print("BERT_TOKENIZER.tokenize(text)",BERT_TOKENIZER.tokenize(text))
-    # return [merge_subtokens(BERT_TOKENIZER.tokenize(text)[:BERT_MAX_SEQ_LEN - 2]) for text in list_of_texts]
+    # for text in list_of_texts:
+        # print("text",text)
+        # print("BERT_TOKENIZER.tokenize(text)",BERT_TOKENIZER.tokenize(text))
+    return [merge_subtokens(BERT_TOKENIZER.tokenize(text)[:BERT_MAX_SEQ_LEN - 2]) for text in list_of_texts]
 
 
 def bert_tokenize(batch_sentences):
@@ -822,7 +826,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,add_special_tokens =True, max_length = 514,truncation=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens), max_length=514, truncation=True, padding=True) for tokens in batch_tokens]
-        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens, add_special_tokens = True,    truncation = True, padding = "max_length", return_attention_mask = True, return_tensors = "pt") for tokens in batch_tokens[0]]
+        batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens, add_special_tokens = True,    truncation = True, padding = "max_length", return_attention_mask = True, return_tensors = "pt") for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
         # print("batch_encoded_dicts size",len(batch_encoded_dicts))
 

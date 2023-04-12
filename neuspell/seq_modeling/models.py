@@ -1005,6 +1005,7 @@ class SubwordBert(nn.Module):
                 targets: "tensor" = None,
                 topk = 1): 
         # cnn
+        print("============debugging forward================")
         batch_size = len(batch_splits)
   
         # bert
@@ -1014,7 +1015,8 @@ class SubwordBert(nn.Module):
             attention_mask=batch_bert_dict["attention_mask"],
             # token_type_ids=batch_bert_dict["batch_token_type_ids"],
             return_dict=False
-        )[0]       
+        )[0] 
+        print("bert_encodings",bert_encodings)      
         # bert_encodings = self.bert_model(
         #     batch_bert_dict["input_ids"],
         #     attention_mask=batch_bert_dict["attention_mask"],
@@ -1030,6 +1032,7 @@ class SubwordBert(nn.Module):
             batch_first=True,
             padding_value=0
         )
+        print("bert_merged_encodings",bert_merged_encodings)      
 
         # concat aux_embs
         # if not None, the expected dim for aux_word_embs: [BS,max_nwords,*]
@@ -1037,10 +1040,12 @@ class SubwordBert(nn.Module):
         if aux_word_embs is not None:
             intermediate_encodings = torch.cat((intermediate_encodings,aux_word_embs),dim=2)
 
+        print("intermediate_encodings",intermediate_encodings)      
         # dense
         # [BS,max_nwords,*] or [BS,max_nwords,self.bertmodule_outdim]->[BS,max_nwords,output_dim]
         # logits = self.dense(self.dropout(intermediate_encodings))
         logits = self.dense(intermediate_encodings)
+        print("logits",logits)      
 
         # loss
         if targets is not None:

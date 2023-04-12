@@ -635,7 +635,6 @@ def merge_subtokens(tokens: List):
             merged_tokens.append(token)
     # print("==================merge_subtokens================")
     text = " ".join(merged_tokens)
-    print("text",text)
     return text
     
 # def _tokenize_untokenize(input_text: str):
@@ -684,7 +683,6 @@ def _custom_bert_tokenize_sentence(input_text):
     # -----> assert len(split_sizes)==len(text.split()), print(len(tokens), len(split_sizes), len(text.split()), split_sizes, text)
     # -----> hence do the following:
     text = merge_subtokens(tokens)
-    print('text',text)
     assert len(split_sizes) == len(text.split()), print(len(tokens), len(split_sizes), len(text.split()), split_sizes,
                                                         text)
     return text, tokens, split_sizes
@@ -692,11 +690,7 @@ def _custom_bert_tokenize_sentence(input_text):
 # Tokenizing noisy dataset
 def _custom_bert_tokenize_sentences(list_of_texts):
     out = [_custom_bert_tokenize_sentence(text) for text in list_of_texts]
-    print("out",out)
     texts, tokens, split_sizes = list(zip(*out))
-    print("texts",texts)
-    print("tokens",tokens)
-    print("split_sizes",split_sizes)
     return [*texts], [*tokens], [*split_sizes]
 
 # Tokenizing clean dataset

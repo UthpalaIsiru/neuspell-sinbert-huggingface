@@ -1049,9 +1049,12 @@ class SubwordBert(nn.Module):
 
         # loss
         if targets is not None:
+            print("==============calling this==============")
             assert len(targets)==batch_size                # targets:[[BS,max_nwords]
             logits_permuted = logits.permute(0, 2, 1)               # logits: [BS,output_dim,max_nwords]
+            print("logits_permuted",logits_permuted)
             loss = self.criterion(logits_permuted,targets)
+            print("loss",loss)
         
         # eval preds
         if not self.training:
@@ -1059,9 +1062,10 @@ class SubwordBert(nn.Module):
             if topk>1:
                 topk_values, topk_inds = \
                     torch.topk(probs, topk, dim=-1, largest=True, sorted=True)  # -> (Tensor, LongTensor) of [BS,max_nwords,topk]
+                print("topk_values",topk_values)
             elif topk==1:
                 topk_inds = torch.argmax(probs,dim=-1)   # [BS,max_nwords]
-
+                print("topk_inds",topk_inds)
             # Note that for those positions with padded_idx,
             #   the arg_max_prob above computes a index because 
             #   the bias term leads to non-uniform values in those positions

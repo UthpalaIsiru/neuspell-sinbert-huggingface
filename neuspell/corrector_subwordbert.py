@@ -183,6 +183,7 @@ class BertChecker(Corrector):
                     continue
                 else:
                     print("================calling else===========")
+                    print("batch_bert_inp.items()",batch_bert_inp.items())
                     batch_labels, batch_sentences = batch_labels_, batch_sentences_
                 batch_bert_inp = {k: v.to(DEVICE) for k, v in batch_bert_inp.items()}
                 print("==========after else===============")

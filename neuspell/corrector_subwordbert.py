@@ -97,6 +97,7 @@ class BertChecker(Corrector):
         # training and validation
         #############################################
         model, vocab = self.model, self.vocab
+        print("vocab, vocab")
         # TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 8, 16
         TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 16, 32
         GRADIENT_ACC = 4
@@ -113,6 +114,7 @@ class BertChecker(Corrector):
                 num += 1
             CHECKPOINT_PATH = NEW_CHECKPOINT_PATH
         VOCAB_PATH = os.path.join(CHECKPOINT_PATH, "vocab.pkl")
+        print("VOCAB_PATH",VOCAB_PATH)
         if not os.path.exists(CHECKPOINT_PATH):
             os.makedirs(CHECKPOINT_PATH)
         print(f"CHECKPOINT_PATH: {CHECKPOINT_PATH}")

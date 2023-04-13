@@ -153,9 +153,9 @@ def get_tokens(data,
     # get all tokens
     token_freq, token2idx, idx2token = {}, {}, {}
     for example in tqdm(data):
-        print("example", example)
+        # print("example", example)
         for token in example.split():
-            print("token", token)
+            # print("token", token)
             if token not in token_freq:
                 token_freq[token] = 0
             token_freq[token] += 1

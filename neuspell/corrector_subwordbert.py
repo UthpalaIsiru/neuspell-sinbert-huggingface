@@ -82,7 +82,7 @@ class BertChecker(Corrector):
         if new_vocab_list:
             raise NotImplementedError("Do not currently support modifying output vocabulary of the models "
                                       "in the finetune step; however, new vocab is accepted at training time.")
-
+        print("=============calling finetune================")
         # load data and split in train-validation
         data_dir = DEFAULT_TRAINTEST_DATA_PATH if data_dir == "default" else data_dir
         train_data = load_data(data_dir, clean_file, corrupt_file)
@@ -98,7 +98,7 @@ class BertChecker(Corrector):
         #############################################
         model, vocab = self.model, self.vocab
         
-        print("vocab", vocab)
+        print("vocab", vocab["token2idx"])
         # TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 8, 16
         TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 16, 32
         GRADIENT_ACC = 4

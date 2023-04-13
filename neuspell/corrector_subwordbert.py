@@ -184,9 +184,9 @@ class BertChecker(Corrector):
                 else:
                     batch_labels, batch_sentences = batch_labels_, batch_sentences_
                 batch_bert_inp = {k: v.to(DEVICE) for k, v in batch_bert_inp.items()}
-                    print("==========else===============")
-                    print("batch_labels",batch_labels)
-                    print("batch_sentences",batch_sentences)
+                print("==========else===============")
+                print("batch_labels",batch_labels)
+                print("batch_sentences",batch_sentences)
                 # set batch data for others
                 print("222222222222222222222vocab", vocab["token2idx"])
                 batch_labels, batch_lengths = labelize(batch_labels, vocab)

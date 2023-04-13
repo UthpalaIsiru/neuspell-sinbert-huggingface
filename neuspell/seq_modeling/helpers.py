@@ -271,8 +271,9 @@ def batch_iter(data, batch_size, shuffle):
 
 
 def labelize(batch_labels, vocab):
-    # print("===========debugging labelize====================")
+    print("===========debugging labelize====================")
     # print("batch_labels",batch_labels)
+    print("3333333333333333vocab['token2idx']",vocab["token2idx"])
     token2idx, pad_token, unk_token = vocab["token2idx"], vocab["pad_token"], vocab["unk_token"]
     # print("token2idx",token2idx)
     # print("pad_token",pad_token)
@@ -281,7 +282,7 @@ def labelize(batch_labels, vocab):
                  in batch_labels]
     # print("list_list",list_list)
     list_tensors = [torch.tensor(x) for x in list_list]
-    # print("list_tensors",list_tensors)
+    print("list_tensors",list_tensors)
     tensor_ = pad_sequence(list_tensors, batch_first=True, padding_value=token2idx[pad_token])
     # print("tensor_",tensor_)
     # print("torch.tensor([len(x) for x in list_list]).long()",torch.tensor([len(x) for x in list_list]).long())

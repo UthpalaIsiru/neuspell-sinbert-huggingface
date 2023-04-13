@@ -97,7 +97,8 @@ class BertChecker(Corrector):
         # training and validation
         #############################################
         model, vocab = self.model, self.vocab
-        print("vocab, vocab")
+        
+        print("vocab", vocab)
         # TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 8, 16
         TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 16, 32
         GRADIENT_ACC = 4

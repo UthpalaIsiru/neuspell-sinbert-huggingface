@@ -172,11 +172,16 @@ class BertChecker(Corrector):
             train_data_iter = batch_iter(train_data, batch_size=TRAIN_BATCH_SIZE, shuffle=True)
             nbatches = int(np.ceil(len(train_data) / TRAIN_BATCH_SIZE))
             optimizer.zero_grad()
+            print("=============ran to this without no issue===========")
             for batch_id, (batch_labels, batch_sentences) in enumerate(train_data_iter):
                 st_time = time.time()
                 # set batch data for bert
+                print("=========before calling bert_tokenize_for_valid_examples===========")
                 batch_labels_, batch_sentences_, batch_bert_inp, batch_bert_splits = \
                     bert_tokenize_for_valid_examples(batch_labels, batch_sentences, self.bert_pretrained_name_or_path)
+                print("batch_labels_",batch_labels_)
+                print("batch_sentences_",batch_sentences_)
+                print("batch_bert_inp",batch_bert_inp)
                 if len(batch_labels_) == 0:
                     print("Not training the following lines due to pre-processing mismatch: \n")
                     print([(a, b) for a, b in zip(batch_labels, batch_sentences)])

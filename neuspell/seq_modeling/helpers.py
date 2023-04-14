@@ -753,8 +753,8 @@ def bert_tokenize(batch_sentences):
 
 def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_sentences, bert_pretrained_name_or_path=None):
     print("Log for debugging")
-    print("111111111 batch_orginal_sentences",batch_orginal_sentences)
-    print("222222222 batch_noisy_sentences",batch_noisy_sentences)
+    # print("111111111 batch_orginal_sentences",batch_orginal_sentences)
+    # print("222222222 batch_noisy_sentences",batch_noisy_sentences)
     """
     inputs:
         batch_noisy_sentences: List[str]
@@ -850,8 +850,8 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
                            "input_ids": batch_input_ids,
                         #    "token_type_ids": batch_token_type_ids
                            }
-        print("batch_bert_dict",batch_bert_dict)
-        print("batch_splits",batch_splits)
+        # print("batch_bert_dict",batch_bert_dict)
+        # print("batch_splits",batch_splits)
     return batch_orginal_sentences, batch_noisy_sentences, batch_bert_dict, batch_splits
 
 ################################################

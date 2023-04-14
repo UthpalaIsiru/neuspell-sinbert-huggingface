@@ -852,6 +852,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
                            }
         # print("batch_bert_dict",batch_bert_dict)
         # print("batch_splits",batch_splits)
+        print("==================finished function=================")
     return batch_orginal_sentences, batch_noisy_sentences, batch_bert_dict, batch_splits
 
 ################################################

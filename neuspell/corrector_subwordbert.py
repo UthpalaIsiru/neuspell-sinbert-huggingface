@@ -179,10 +179,13 @@ class BertChecker(Corrector):
                 print("=========before calling bert_tokenize_for_valid_examples===========")
                 batch_labels_, batch_sentences_, batch_bert_inp, batch_bert_splits = \
                     bert_tokenize_for_valid_examples(batch_labels, batch_sentences, self.bert_pretrained_name_or_path)
-                print("batch_labels_",batch_labels_)
-                print("batch_sentences_",batch_sentences_)
-                print("batch_bert_inp",batch_bert_inp)
+                # print("batch_labels_",batch_labels_)
+                # print("batch_sentences_",batch_sentences_)
+                # print("batch_bert_inp",batch_bert_inp)
+                print("=========done calling bert_tokenize_for_valid_examples===========")
+
                 if len(batch_labels_) == 0:
+                    print("===============calling if===============")
                     print("Not training the following lines due to pre-processing mismatch: \n")
                     print([(a, b) for a, b in zip(batch_labels, batch_sentences)])
                     continue

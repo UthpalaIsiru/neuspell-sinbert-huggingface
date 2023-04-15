@@ -900,6 +900,7 @@ class SubwordBert(nn.Module):
         self.bert_dropout = torch.nn.Dropout(0.2)
         self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
         self.bertmodule_outdim = self.bert_model.config.vocab_size
+        print("self.bert_model.config",self.bert_model.config)
         # Uncomment to freeze BERT layers
         # for param in self.bert_model.parameters():
         #     param.requires_grad = False
@@ -907,7 +908,9 @@ class SubwordBert(nn.Module):
         # output module
         assert output_dim>0
         # self.dropout = nn.Dropout(p=0.4)
+        print("output_dim",output_dim)
         self.dense = nn.Linear(self.bertmodule_outdim,output_dim)
+        print("self.dense",self.dense)
 
         # loss
         # See https://pytorch.org/docs/stable/nn.html#crossentropyloss
@@ -1056,7 +1059,7 @@ class SubwordBert(nn.Module):
             print("logits_permuted size",logits_permuted.size())
             print("targets",targets)
             print("len targets",len(targets))
-            loss = self.criterion(torch.unsqueeze(logits_permuted,0),torch.unsqueeze(targets,0))
+            loss = self.criterion(logits_permuted,targets)
             # print("loss",loss)
         
         # eval preds

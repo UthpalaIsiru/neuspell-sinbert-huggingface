@@ -97,7 +97,7 @@ class BertChecker(Corrector):
         # training and validation
         #############################################
         model, vocab = self.model, self.vocab
-        print("1111111111111111111111111111vocab", vocab["token2idx"])
+        # print("1111111111111111111111111111vocab", vocab["token2idx"])
         # TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 8, 16
         TRAIN_BATCH_SIZE, VALID_BATCH_SIZE = 16, 32
         GRADIENT_ACC = 4
@@ -198,7 +198,7 @@ class BertChecker(Corrector):
                 print("batch_labels",batch_labels)
                 print("batch_sentences",batch_sentences)
                 # set batch data for others
-                print("222222222222222222222vocab", vocab["token2idx"])
+                # print("222222222222222222222vocab", vocab["token2idx"])
                 batch_labels, batch_lengths = labelize(batch_labels, vocab)
                 # batch_lengths = batch_lengths.to(device)
                 batch_labels = batch_labels.to(DEVICE)

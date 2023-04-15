@@ -752,9 +752,9 @@ def bert_tokenize(batch_sentences):
 
 
 def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_sentences, bert_pretrained_name_or_path=None):
-    print("Log for debugging")
-    print("111111111 batch_orginal_sentences",batch_orginal_sentences)
-    print("222222222 batch_noisy_sentences",batch_noisy_sentences)
+    # print("Log for debugging")
+    # print("111111111 batch_orginal_sentences",batch_orginal_sentences)
+    # print("222222222 batch_noisy_sentences",batch_noisy_sentences)
     """
     inputs:
         batch_noisy_sentences: List[str]
@@ -787,30 +787,30 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     # print("model max length BEFORE", BERT_TOKENIZER.model_max_length)
     BERT_TOKENIZER.model_max_length = 514
     # print("model max length AFTER", BERT_TOKENIZER.model_max_length)
-    print("================before tokenizing======================")
-    print("batch_orginal_sentences", batch_orginal_sentences)
-    print("batch_noisy_sentences", batch_noisy_sentences)
+    # print("================before tokenizing======================")
+    # print("batch_orginal_sentences", batch_orginal_sentences)
+    # print("batch_noisy_sentences", batch_noisy_sentences)
     _batch_orginal_sentences = _simple_bert_tokenize_sentences(batch_orginal_sentences)
-    print("================after tokenizing======================")
-    print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
+    # print("================after tokenizing======================")
+    # print("3333333333333333333 _batch_orginal_sentences", _batch_orginal_sentences)
 
     _batch_noisy_sentences, _batch_tokens, _batch_splits = _custom_bert_tokenize_sentences(batch_noisy_sentences)
-    print("================after tokenizing======================")
-    print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
+    # print("================after tokenizing======================")
+    # print("444444444444444444 _batch_noisy_sentences", _batch_noisy_sentences)
 
     valid_idxs = [idx for idx, (a, b) in enumerate(zip(_batch_orginal_sentences, _batch_noisy_sentences)) if
                   len(a.split()) == len(b.split())]
-    print("55555555555555555 valid_idxs",valid_idxs)
+    # print("55555555555555555 valid_idxs",valid_idxs)
     batch_orginal_sentences = [line for idx, line in enumerate(_batch_orginal_sentences) if idx in valid_idxs]
     batch_noisy_sentences = [line for idx, line in enumerate(_batch_noisy_sentences) if idx in valid_idxs]
     
-    print("after enumerating ")
-    print("6666666666666666 batch_orginal_sentences",batch_orginal_sentences)
-    print("7777777777777777 batch_noisy_sentences",batch_noisy_sentences)
+    # print("after enumerating ")
+    # print("6666666666666666 batch_orginal_sentences",batch_orginal_sentences)
+    # print("7777777777777777 batch_noisy_sentences",batch_noisy_sentences)
 
     batch_tokens = [line for idx, line in enumerate(_batch_tokens) if idx in valid_idxs]
     batch_splits = [line for idx, line in enumerate(_batch_splits) if idx in valid_idxs]
-    print("99999999999999999 batch_splits", batch_splits)
+    # print("99999999999999999 batch_splits", batch_splits)
     batch_bert_dict = {
         "attention_mask": [],
         "input_ids": [],
@@ -818,14 +818,14 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
     }
     if len(valid_idxs) > 0:
         max_seq_len = max([len(tokens) for tokens in batch_tokens])
-        print("max_seq_len",max_seq_len)
+        # print("max_seq_len",max_seq_len)
         # print("batch_tokens size",len(batch_tokens))
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,add_special_tokens =True, max_length = 514,truncation=True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens,max_length=514, add_special_tokens=True,  padding="max_length",truncation = True, is_split_into_words=True, return_attention_mask = True) for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens), max_length=514, truncation=True, padding=True) for tokens in batch_tokens]
         batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(tokens, add_special_tokens = True,    truncation = True, max_length=514, padding = "max_length", return_attention_mask = True, return_tensors = "pt") for tokens in batch_tokens]
         # batch_encoded_dicts = [BERT_TOKENIZER.encode_plus(str(tokens),max_length=512,truncation = True) for tokens in batch_tokens]
-        print("batch_encoded_dicts ",batch_encoded_dicts)
+        # print("batch_encoded_dicts ",batch_encoded_dicts)
 
    
         # print("input = encoding['input_ids'][0]",batch_encoded_dicts['input_ids'])

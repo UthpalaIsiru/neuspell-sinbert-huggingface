@@ -899,7 +899,8 @@ class SubwordBert(nn.Module):
 
         self.bert_dropout = torch.nn.Dropout(0.2)
         self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
-        self.bertmodule_outdim = self.bert_model.config.vocab_size
+        self.bertmodule_outdim = self.bert_model.config.hidden_size
+        # self.bertmodule_outdim = self.bert_model.config.vocab_size
         print("self.bert_model.config",self.bert_model.config)
         # Uncomment to freeze BERT layers
         # for param in self.bert_model.parameters():
@@ -1010,7 +1011,7 @@ class SubwordBert(nn.Module):
         # cnn
         # print("============debugging forward================")
         batch_size = len(batch_splits)
-  
+        print("aux_word_embs",aux_word_embs)
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
         bert_encodings = self.bert_model(

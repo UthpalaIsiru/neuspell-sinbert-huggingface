@@ -911,7 +911,8 @@ class SubwordBert(nn.Module):
 
         # loss
         # See https://pytorch.org/docs/stable/nn.html#crossentropyloss
-        self.criterion = nn.CrossEntropyLoss(reduction='mean',ignore_index=padding_idx)
+        self.criterion = nn.CrossEntropyLoss(reduction='mean',ignore_index=-1)
+        # self.criterion = nn.CrossEntropyLoss(reduction='mean',ignore_index=padding_idx)
     @property
     def device(self) -> torch.device:
         return next(self.parameters()).device

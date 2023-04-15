@@ -1044,7 +1044,7 @@ class SubwordBert(nn.Module):
         if aux_word_embs is not None:
             intermediate_encodings = torch.cat((intermediate_encodings,aux_word_embs),dim=2)
 
-        # print("intermediate_encodings",intermediate_encodings)      
+        print("intermediate_encodings",intermediate_encodings.size())      
         # dense
         # [BS,max_nwords,*] or [BS,max_nwords,self.bertmodule_outdim]->[BS,max_nwords,output_dim]
         # logits = self.dense(self.dropout(intermediate_encodings))

@@ -898,7 +898,8 @@ class SubwordBert(nn.Module):
         super(SubwordBert,self).__init__()
 
         self.bert_dropout = torch.nn.Dropout(0.2)
-        self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
+        self.bert_model = AutoModelForMaskedLM.from_pretrained("bert-base-cased")
+        # self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
         # self.bertmodule_outdim = self.bert_model.config.hidden_size
         self.bertmodule_outdim = self.bert_model.config.vocab_size
         print("self.bert_model.config",self.bert_model.config)

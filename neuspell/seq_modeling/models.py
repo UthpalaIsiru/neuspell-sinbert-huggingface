@@ -900,8 +900,8 @@ class SubwordBert(nn.Module):
         self.bert_dropout = torch.nn.Dropout(0.2)
         self.bert_model = AutoModelForMaskedLM.from_pretrained("bert-base-cased")
         # self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
-        # self.bertmodule_outdim = self.bert_model.config.hidden_size
-        self.bertmodule_outdim = self.bert_model.config.vocab_size
+        self.bertmodule_outdim = self.bert_model.config.hidden_size
+        # self.bertmodule_outdim = self.bert_model.config.vocab_size
         print("self.bert_model.config",self.bert_model.config)
         # Uncomment to freeze BERT layers
         # for param in self.bert_model.parameters():
@@ -911,7 +911,7 @@ class SubwordBert(nn.Module):
         assert output_dim>0
         # self.dropout = nn.Dropout(p=0.4)
         print("output_dim",output_dim)
-        self.dense = nn.Linear(self.bertmodule_outdim,52000)
+        self.dense = nn.Linear(self.bertmodule_outdim,output_dim)
         print("self.dense",self.dense)
 
         # loss

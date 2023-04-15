@@ -1053,9 +1053,9 @@ class SubwordBert(nn.Module):
             assert len(targets)==batch_size                # targets:[[BS,max_nwords]
             logits_permuted = logits.permute(0, 2, 1)               # logits: [BS,output_dim,max_nwords]
             # print("logits_permuted",logits_permuted)
-            # print("logits_permuted size",logits_permuted.size())
+            print("logits_permuted size",logits_permuted.size())
             # print("targets",targets)
-            # print("len targets",len(targets))
+            print("len targets",len(targets))
             loss = self.criterion(logits_permuted,targets)
             # print("loss",loss)
         

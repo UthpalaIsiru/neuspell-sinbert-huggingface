@@ -900,7 +900,7 @@ class SubwordBert(nn.Module):
         self.bert_dropout = torch.nn.Dropout(0.2)
         self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-large")
         self.bertmodule_outdim = self.bert_model.config.hidden_size
-        self.bert_model.resize_token_embeddings(768) #newly added to reduce the lm head token embedding size
+        self.bert_model.resize_token_embeddings(2000) #newly added to reduce the lm head token embedding size
         # self.bertmodule_outdim = self.bert_model.config.vocab_size
         print("self.bert_model.config",self.bert_model.config)
         # Uncomment to freeze BERT layers
@@ -911,7 +911,7 @@ class SubwordBert(nn.Module):
         assert output_dim>0
         # self.dropout = nn.Dropout(p=0.4)
         print("output_dim",output_dim)
-        self.dense = nn.Linear(self.bertmodule_outdim,768)
+        self.dense = nn.Linear(self.bertmodule_outdim,2000)
         print("self.dense",self.dense)
 
         # loss

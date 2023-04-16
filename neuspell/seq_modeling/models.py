@@ -1013,6 +1013,7 @@ class SubwordBert(nn.Module):
         # print("============debugging forward================")
         batch_size = len(batch_splits)
         print("aux_word_embs",aux_word_embs)
+        print("======before bert_encodings=================")
         # bert
         # BS X max_nsubwords x self.bertmodule_outdim
         bert_encodings = self.bert_model(

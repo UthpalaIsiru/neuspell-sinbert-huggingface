@@ -443,7 +443,7 @@ def untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_clean
         batch_predictions = \
             [" ".join([idx2token[idx] if idx != unktoken else clean_[i] for i, idx in enumerate(pred_[:len_])]) \
              for pred_, len_, clean_ in zip(batch_predictions, batch_lengths, batch_clean_sentences)]
-        print("batch_predictions",batch_predictions)
+        # print("batch_predictions",batch_predictions)
     elif backoff == "neutral":
         batch_predictions = \
             [" ".join([idx2token[idx] if idx != unktoken else "a" for i, idx in enumerate(pred_[:len_])]) \

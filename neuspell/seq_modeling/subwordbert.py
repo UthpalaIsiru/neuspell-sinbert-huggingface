@@ -159,8 +159,8 @@ def model_inference(model, data, topk, device, batch_size=16, vocab_=None):
                 """
                 batch_loss, batch_predictions = model(batch_bert_inp, batch_bert_splits, targets=batch_labels_ids,
                                                       topk=topk)
-                print("batch_loss",batch_loss)
-                print("batch_predictions",batch_predictions)
+                # print("batch_loss",batch_loss)
+                # print("batch_predictions",batch_predictions)
         except RuntimeError:
             print(f"batch_bert_inp:{len(batch_bert_inp.keys())},batch_labels_ids:{batch_labels_ids.shape}")
             raise Exception("")

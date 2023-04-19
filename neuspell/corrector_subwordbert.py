@@ -194,7 +194,7 @@ class BertChecker(Corrector):
                     # print("batch_bert_inp.items()",batch_bert_inp.items())
                     batch_labels, batch_sentences = batch_labels_, batch_sentences_
                 batch_bert_inp = {k: v.to(DEVICE) for k, v in batch_bert_inp.items()}
-                print("==========after else===============")
+                # print("==========after else===============")
                 # print("batch_labels",batch_labels)
                 # print("batch_sentences",batch_sentences)
                 # set batch data for others

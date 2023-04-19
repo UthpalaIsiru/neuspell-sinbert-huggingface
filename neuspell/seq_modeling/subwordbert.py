@@ -80,7 +80,7 @@ def model_predictions(model, data, vocab, device, batch_size=16):
         # set batch data for bert
         batch_labels_, batch_sentences_, batch_bert_inp, batch_bert_splits = bert_tokenize_for_valid_examples(
             batch_labels, batch_sentences)
-        print("len batch_labels_", len(batch_labels_))
+        # print("len batch_labels_", len(batch_labels_))
         if len(batch_labels_) == 0:
             print("################")
             print("Not predicting the following lines due to pre-processing mismatch: \n")
@@ -96,18 +96,18 @@ def model_predictions(model, data, vocab, device, batch_size=16):
         batch_labels_ids = batch_labels_ids.to(device)
         # forward
         with torch.no_grad():
-            print("batch_bert_inp",batch_bert_inp)
-            print("batch_bert_splits",batch_bert_splits)
-            print("batch_labels_ids",batch_labels_ids)
-            print("topk",topk)
+            # print("batch_bert_inp",batch_bert_inp)
+            # print("batch_bert_splits",batch_bert_splits)
+            # print("batch_labels_ids",batch_labels_ids)
+            # print("topk",topk)
             """
             NEW: batch_predictions can now be of shape (batch_size,batch_max_seq_len,topk) if topk>1, else (batch_size,batch_max_seq_len)
             """
             _, batch_predictions = model(batch_bert_inp, batch_bert_splits, targets=batch_labels_ids, topk=topk)
         batch_predictions = untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_labels)
-        print("batch_predictions",batch_predictions)
+        # print("batch_predictions",batch_predictions)
         final_sentences.extend(batch_predictions)
-        print("final_sentences",final_sentences)
+        # print("final_sentences",final_sentences)
     # print("total inference time for this data is: {:4f} secs".format(time.time()-inference_st_time))
     return final_sentences
 
@@ -129,7 +129,7 @@ def model_inference(model, data, topk, device, batch_size=16, vocab_=None):
     valid_acc = 0.
     print("data size: {}".format(len(data)))
     data_iter = batch_iter(data, batch_size=VALID_batch_size, shuffle=False)
-    print("data_iter",data_iter)
+    # print("data_iter",data_iter)
     model.eval()
     model.to(device)
     for batch_id, (batch_labels, batch_sentences) in tqdm(enumerate(data_iter)):

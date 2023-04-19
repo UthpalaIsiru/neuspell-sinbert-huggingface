@@ -271,9 +271,9 @@ def batch_iter(data, batch_size, shuffle):
 
 
 def labelize(batch_labels, vocab):
-    print("===========debugging labelize====================")
+    # print("===========debugging labelize====================")
     # print("batch_labels",batch_labels)
-    print("3333333333333333vocab['token2idx']",vocab["token2idx"])
+    # print("3333333333333333vocab['token2idx']",vocab["token2idx"])
     token2idx, pad_token, unk_token = vocab["token2idx"], vocab["pad_token"], vocab["unk_token"]
     # print("token2idx",token2idx)
     # print("pad_token",pad_token)
@@ -282,7 +282,7 @@ def labelize(batch_labels, vocab):
                  in batch_labels]
     # print("list_list",list_list)
     list_tensors = [torch.tensor(x) for x in list_list]
-    print("list_tensors",list_tensors)
+    # print("list_tensors",list_tensors)
     tensor_ = pad_sequence(list_tensors, batch_first=True, padding_value=token2idx[pad_token])
     # print("tensor_",tensor_)
     # print("torch.tensor([len(x) for x in list_list]).long()",torch.tensor([len(x) for x in list_list]).long())
@@ -427,18 +427,18 @@ def untokenize(batch_predictions, batch_lengths, vocab):
 
 
 def untokenize_without_unks(batch_predictions, batch_lengths, vocab, batch_clean_sentences, backoff="pass-through"):
-    print("================ debugging untokenize_without_unks ===============")
-    print("batch_predictions",batch_predictions)
-    print("batch_clean_sentences",batch_clean_sentences)
-    print("vocab", vocab)
+    # print("================ debugging untokenize_without_unks ===============")
+    # print("batch_predictions",batch_predictions)
+    # print("batch_clean_sentences",batch_clean_sentences)
+    # print("vocab", vocab)
     assert backoff in ["neutral", "pass-through"], print(f"selected backoff strategy not implemented: {backoff}")
     idx2token = vocab["idx2token"]
-    print("idx2token", idx2token)
+    # print("idx2token", idx2token)
     unktoken = vocab["token2idx"][vocab["unk_token"]]
-    print("unktoken", unktoken)
+    # print("unktoken", unktoken)
     assert len(batch_predictions) == len(batch_lengths) == len(batch_clean_sentences)
     batch_clean_sentences = [sent.split() for sent in batch_clean_sentences]
-    print("batch_clean_sentences", batch_clean_sentences)
+    # print("batch_clean_sentences", batch_clean_sentences)
     if backoff == "pass-through":
         batch_predictions = \
             [" ".join([idx2token[idx] if idx != unktoken else clean_[i] for i, idx in enumerate(pred_[:len_])]) \
@@ -783,7 +783,7 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
             # BERT_TOKENIZER.do_basic_tokenize = True
             # BERT_TOKENIZER.tokenize_chinese_chars = False
 
-    print("BERT_TOKENIZER",BERT_TOKENIZER)
+    # print("BERT_TOKENIZER",BERT_TOKENIZER)
     # print("model max length BEFORE", BERT_TOKENIZER.model_max_length)
     BERT_TOKENIZER.model_max_length = 514
     # print("model max length AFTER", BERT_TOKENIZER.model_max_length)
@@ -852,8 +852,8 @@ def bert_tokenize_for_valid_examples(batch_orginal_sentences, batch_noisy_senten
                            "input_ids": batch_input_ids,
                         #    "token_type_ids": batch_token_type_ids
                            }
-        print("batch_bert_dict",batch_bert_dict)
-        print("==================finished function=================")
+        # print("batch_bert_dict",batch_bert_dict)
+        # print("==================finished function=================")
     return batch_orginal_sentences, batch_noisy_sentences, batch_bert_dict, batch_splits
 
 ################################################

@@ -172,25 +172,25 @@ class BertChecker(Corrector):
             train_data_iter = batch_iter(train_data, batch_size=TRAIN_BATCH_SIZE, shuffle=True)
             nbatches = int(np.ceil(len(train_data) / TRAIN_BATCH_SIZE))
             optimizer.zero_grad()
-            print("=============ran to this without no issue===========")
+            # print("=============ran to this without no issue===========")
             for batch_id, (batch_labels, batch_sentences) in enumerate(train_data_iter):
                 st_time = time.time()
                 # set batch data for bert
-                print("=========before calling bert_tokenize_for_valid_examples===========")
+                # print("=========before calling bert_tokenize_for_valid_examples===========")
                 batch_labels_, batch_sentences_, batch_bert_inp, batch_bert_splits = \
                     bert_tokenize_for_valid_examples(batch_labels, batch_sentences, self.bert_pretrained_name_or_path)
                 # print("batch_labels_",batch_labels_)
                 # print("batch_sentences_",batch_sentences_)
                 # print("batch_bert_inp",batch_bert_inp)
-                print("=========done calling bert_tokenize_for_valid_examples===========")
+                # print("=========done calling bert_tokenize_for_valid_examples===========")
 
                 if len(batch_labels_) == 0:
-                    print("===============calling if===============")
+                    # print("===============calling if===============")
                     print("Not training the following lines due to pre-processing mismatch: \n")
                     print([(a, b) for a, b in zip(batch_labels, batch_sentences)])
                     continue
                 else:
-                    print("================calling else===========")
+                    # print("================calling else===========")
                     # print("batch_bert_inp.items()",batch_bert_inp.items())
                     batch_labels, batch_sentences = batch_labels_, batch_sentences_
                 batch_bert_inp = {k: v.to(DEVICE) for k, v in batch_bert_inp.items()}
@@ -202,7 +202,7 @@ class BertChecker(Corrector):
                 batch_labels, batch_lengths = labelize(batch_labels, vocab)
                 # batch_lengths = batch_lengths.to(device)
                 batch_labels = batch_labels.to(DEVICE)
-                print("=============after labelize==============", batch_labels)
+                # print("=============after labelize==============", batch_labels)
                 # forward
                 model.train()
                 loss = model(batch_bert_inp, batch_bert_splits, targets=batch_labels)

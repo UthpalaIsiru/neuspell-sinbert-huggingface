@@ -901,8 +901,8 @@ class SubwordBert(nn.Module):
         self.bert_model = AutoModelForMaskedLM.from_pretrained("NLPC-UOM/SinBERT-small")
         # self.bertmodule_outdim = self.bert_model.config.hidden_size
         # self.bert_model.resize_token_embeddings(768) #newly added to reduce the lm head token embedding size
-        self.bertmodule_outdim = self.bert_model.config.vocab_size
-        print("self.bert_model.config",self.bert_model.config)
+        # self.bertmodule_outdim = self.bert_model.config.vocab_size
+        # print("self.bert_model.config",self.bert_model.config)
         # Uncomment to freeze BERT layers
         # for param in self.bert_model.parameters():
         #     param.requires_grad = False

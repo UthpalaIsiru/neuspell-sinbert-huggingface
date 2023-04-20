@@ -9,7 +9,7 @@ import torch
 import transformers
 from torch.nn.utils.rnn import pad_sequence
 from tqdm import tqdm
-from transformers import AutoTokenizer, AutoModelForMaskedLM, AutoModelForSequenceClassification
+# from transformers import AutoTokenizer, AutoModelForMaskedLM, AutoModelForSequenceClassification
 
 BERT_MAX_SEQ_LEN = 512 #bert_max_seq_len
 BERT_TOKENIZER = None

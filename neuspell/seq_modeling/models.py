@@ -911,7 +911,7 @@ class SubwordBert(nn.Module):
         assert output_dim>0
         # self.dropout = nn.Dropout(p=0.4)
         # print("output_dim",output_dim)
-        self.dense = nn.Linear(30000,output_dim)
+        self.dense = nn.Linear(self.bertmodule_outdim,30000)
         # self.dense = nn.Linear(self.bertmodule_outdim,output_dim)
         # print("self.dense",self.dense)
 
